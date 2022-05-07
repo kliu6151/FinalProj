@@ -1,0 +1,6 @@
+.invalidNewUserName {
+    color:red;
+    text-align: center;
+    width:60%;
+    /* display:none; */
+}

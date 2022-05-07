@@ -1,0 +1,18 @@
+#AT1, #AU {
+    font-size: 35px;
+    font-weight: bold;
+
+}
+
+#AText, #AUser {
+    width: 100%;
+}
+
+#AText {
+    height:30vh;
+}
+
+#AUser {
+    height: 5%;
+    font-size: 20px;
+}

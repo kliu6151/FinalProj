@@ -1,0 +1,87 @@
+#horiLine {
+    width: 100%;
+    position: fixed;
+    margin: .5px;
+    border: none;
+    border-top: dotted 2px black;
+}
+
+.wholeAnswerTable {
+    width:100%;
+}
+
+.firstCol {
+    width: 25%;
+    text-align:center;
+    font-weight:bold;
+}
+
+.secondCol {
+    width:50%;
+}
+
+.thirdCol {
+    width:25%;
+    vertical-align: top;
+    text-align: right;
+    padding-right: 5em;
+}
+
+.answerText {
+    width:75%;
+}
+
+.answerP {
+    width:25%;
+}
+
+#answerButton {
+    border-radius: 10px;
+    background-color: #165A92;
+    font-size: 15px;
+    border: 3px solid black;
+    color:white;
+    padding: 0.5em;
+    left:50%;
+    margin-top: .5em;
+
+}
+
+#answerButtonContainer {
+    text-align:center;
+
+}
+
+.ansBy {
+    color: blue;
+}
+
+.ansOn {
+    color: green;
+}
+
+.ansAt {
+    color: teal;
+}
+
+.questionsTag {
+    vertical-align: top;
+    color:white;
+    padding: 0px 8px;
+    border-radius: 8px;
+    background-color: gray;
+}
+
+.ABC {
+    display: none;
+}
+.ABCD {
+    display: none;
+}
+
+.firstColA {
+    width: 10%;
+    text-align: center;
+    padding: 0;
+    height:50px;
+}

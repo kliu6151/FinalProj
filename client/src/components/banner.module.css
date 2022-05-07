@@ -1,0 +1,51 @@
+#banner {
+    width: 100%;
+    text-align: center;
+    background-color: lightgray;
+    height:3rem;
+    align-items: center;
+    display:block;
+}
+
+#banner > span
+{
+    padding-left:1rem;
+    padding-right:1rem;
+    padding-top:.9rem;
+    padding-bottom:1rem;
+}
+
+#banner > * {
+    position: relative;
+    top:25%;
+}
+
+#Q, #T {
+    font-weight: 550;
+}
+
+#Title{
+    font-weight: bolder;
+    font-size: larger;
+}
+
+#Q:hover, #T:hover, #profile:hover, #logout:hover {
+    color: darkgray;
+    background-color: rgb(104, 102, 102);
+}
+
+.qTest {
+    color:gray;
+}
+
+.qTestB{
+    color:blue;
+}
+
+.tTest {
+    color:gray;
+}
+
+.tTestB {
+    color:blue;
+}

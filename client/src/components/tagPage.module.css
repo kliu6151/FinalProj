@@ -1,0 +1,35 @@
+.tagPageTags {
+    /* width:100px; */
+    height:100px;
+    /* text-align: center; */
+    /* color:blue; */
+    display:inline-block;
+    padding: 10px;
+    margin: 20px; 
+    border: 2px solid black;
+    /* text-decoration-line: underline; */
+    /* cursor: pointer; */
+    /* font-size: 150%; */
+    /* left: 50%; */
+}
+
+.tagPageQAmt {
+    color:black;
+    margin-top: 25px;
+    text-decoration-color: white;
+    text-decoration-thickness: 0%;
+    font-size:80%;
+}
+
+.tagPageTagSpecific {
+    text-decoration-line: underline;
+    color:blue;
+    cursor: pointer;
+    font-size: 150%;
+}
+
+.wholeTagTable {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}

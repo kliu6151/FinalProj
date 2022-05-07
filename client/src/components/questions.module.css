@@ -1,0 +1,33 @@
+#QHeader {
+    table-layout: fixed;
+    width: 100%;
+    padding-bottom: 3%;    
+}
+
+#Headings {
+    width:90%;
+}
+
+#H1 {
+    width:25%;
+}
+
+
+
+#H3{
+    width:25%;
+}
+
+#AMA {
+    border: 3px solid black;
+    padding : 0.5em;
+    border-radius: 10px;
+    position:inherit;
+    left:75%;
+    background-color: #165A92;
+    color:white;
+}
+
+#NOAMA {
+    display: none;
+}

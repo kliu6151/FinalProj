@@ -1,0 +1,47 @@
+#wholeForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.logIn {
+    /* text-align: center; */
+    height: 50%;
+    position: fixed;
+    top:50%;
+    transform: translate(-50%, -50%);
+    left:50%;
+    color: #a89988;
+    background-image: linear-gradient(0deg, #020b14 0%, #384a5e 100%);
+    width: 382px;  
+    /* overflow: hidden;   */
+    margin: auto;  
+    /* margin: 20 0 0 450px;   */
+    /* padding: 80px;   */
+    /* background: #23463f;   */
+    border-radius: 15px ;  
+
+}
+
+#bg {
+    background-image: linear-gradient(0deg, #adc2da 0%, #2d353d 100%);
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* text-align: center; */
+}
+
+#title {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 15%;
+    position: fixed;
+    font-size: 35px;
+}
+
+#signName {
+    color:blue;
+}

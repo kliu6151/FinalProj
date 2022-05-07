@@ -1,0 +1,60 @@
+.welcome {
+    /* text-align: center; */
+    height: 100vh;
+    color: #a89988;
+    background-image: linear-gradient(0deg, #020b14 0%, #384a5e 100%);
+  }
+
+.welcome header
+{
+    text-align: center;
+    font-size:50px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+      /* position: absolute; */
+      /* transform: translate(-50%,-25%); */
+      /* left:50%; */
+  
+}
+
+.welcome h1 {
+    color: orange;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#returningUser {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+#logIn, #signUp, #guest {
+    text-decoration: underline;
+}
+
+#newUser {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+#or {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#guest {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}

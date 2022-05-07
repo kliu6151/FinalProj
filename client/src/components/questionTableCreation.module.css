@@ -1,0 +1,62 @@
+#horiLine {
+    width: 100%;
+    /* position: fixed; */
+    margin: .5px;
+    border: none;
+    border-top: dotted 2px black;
+    display:none;
+}
+
+.wholeQuestionTable {
+    width:100%;
+}
+
+.firstCol {
+    width: 25%;
+}
+
+.secondCol {
+    width:50%;
+}
+
+.thirdCol {
+    width:25%;
+}
+
+.questionsTag {
+    vertical-align: top;
+    color:white;
+    padding: 0px 8px;
+    border-radius: 8px;
+    background-color: gray;
+}
+
+.rowChild {
+    /* width: 100%; */
+    margin: auto;
+    padding: auto;
+    /* border: none; */
+    border-bottom: dotted .5px black;
+}
+
+#questionsTitle {
+    text-decoration: none;
+    color: blue;
+    cursor:pointer;
+}
+
+table { 
+    border-collapse: collapse; 
+  }
+
+.askBy {
+    color: blue;
+}
+
+.askOn {
+    color: green;
+}
+
+.askAt {
+    color: teal;
+}

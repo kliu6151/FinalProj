@@ -1,1 +1,16 @@
 /* Add CSS */
+.allAskedBy, .allAnsBy {
+    color:blue;
+}
+
+.allAskedOn, .allAnsOn {
+    color: green;
+}
+
+.allAskedAt, .allAnsAt {
+    color: teal;
+}
+
+body{
+    margin: 0;
+}
