@@ -7,7 +7,8 @@ var userSchema = new Schema({
     email: String,
     password: String,
     reputation: {type: Number, default: 0},
-    votedOn: { type : Array , "default" : [] }
+    votedOn: { type : Array , default : [] },
+    createdOn: {type: Date, default: Date.now}
 });
 
 userSchema

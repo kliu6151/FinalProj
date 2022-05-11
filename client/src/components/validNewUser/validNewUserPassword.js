@@ -9,8 +9,7 @@ class ValidNewUserPassword extends React.Component {
     
     render() {
         return (
-            <div className = {styles.invalidNewUserName}>Passwords don't match!</div>
-
+            <div className = {styles.invalidNewUserName}>{this.props.invalidPwNS ? "Make a better password" : null} {this.props.invalidPw ? "Passwords don't match" : null}</div>
         );
     }
 

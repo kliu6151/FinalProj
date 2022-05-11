@@ -1,7 +1,7 @@
 import styles from './questionTableCreation.module.css'
 import React from 'react';
 
-class TableCreate extends React.Component {
+class TableCreateTag extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,11 +36,19 @@ class TableCreate extends React.Component {
     // var dat = this.props.data;
     var quest = this.props.questionData;
     // console.log(this.props);
-
+    // t = t.filter(e => e.createdBy === this.props.currUser.username)
+    let t = [];
+    quest = quest.filter(e => e.tags.filter(t => t.createdBy === this.props.currUser.username));
+    for(let i = 0; i < quest.length; i++) {
+        if(quest[i].tags[0].createdBy === this.props.currUser.username) {
+            t.push(quest[i]);
+        }
+    }
+    // console.log(t);
     var tag = this.props.tagData;
     // console.log(quest);
     var currentPage = this.props.currPage;
-    var currSetOfQuestions = quest.slice((currentPage-1)*5, (currentPage * 5));
+    var currSetOfQuestions = t.slice((currentPage-1)*5, (currentPage * 5));
     return (
         <div>
         <table className = {styles.wholeQuestionTable}>
@@ -89,7 +97,7 @@ class TableCreate extends React.Component {
             </tbody>
         </table>
             <button id = {currentPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {this.renderPrevPage}>&#x2190;</button>
-            <button id = {quest.length !== 0 && Math.ceil(quest.length / 5) !== currentPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextPage}>&#x2192;</button>
+            <button id = {t.length !== 0 && Math.ceil(t.length / 5) !== currentPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextPage}>&#x2192;</button>
 
         </div>
     );
@@ -125,4 +133,4 @@ generateTime = (curDate) => {
     }
 }
 
-export default TableCreate;
+export default TableCreateTag;

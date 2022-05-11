@@ -5,7 +5,8 @@ var mongoose = require('mongoose')
 
 // module.exports = function() {
 var tagSchema = new Schema({
-    name: String
+    name: String,
+    createdBy: String
 
     // url: String
 });

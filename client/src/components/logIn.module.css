@@ -49,3 +49,8 @@
 #newUser, #guest {
     cursor:pointer;
 }
+
+#logPass {
+    -webkit-text-security: circle; 
+
+}

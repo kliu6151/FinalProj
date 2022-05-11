@@ -86,10 +86,20 @@ class BannerSection extends React.Component {
 
         }
 
-        logOut = () => {
+        logOut = (e) => {
+            e.preventDefault();
             this.props.handlerForLoggingOut();
         }
-    
+
+        logIn = (e) => {
+            e.preventDefault();
+            this.props.handlerForLoggingIn();
+        }
+        
+        handlerForProfilePage = (e) => {
+            e.preventDefault();
+            this.props.handlerForProfilePage();
+        }
 
     render() {
     return(
@@ -108,8 +118,8 @@ class BannerSection extends React.Component {
             </span>    
             <span id ={styles["Title"]}> FAKE STACK OVERFLOW</span>
             <input id = {styles["search"]} type = "text" placeholder="Search ..." name="search"  onKeyPress = {this.onEnter} />
-            <span id = {!this.props.guestMode ? styles["profile"] : null}> {!this.props.guestMode ? this.props.currUser.username : null} </span>
-            <span id = {!this.props.guestMode ? styles["logout"] : null} onClick = {this.logOut}> {!this.props.guestMode ? "Log Out" : null} </span>
+            <span id = {!this.props.guestMode ? styles["profile"] : null} onClick = {this.handlerForProfilePage}> {!this.props.guestMode ? this.props.currUser.username : null} </span>
+            <span id = {!this.props.guestMode ? styles["logout"] : styles["login"]} onClick = {!this.props.guestMode ? this.logOut : this.logIn}> {!this.props.guestMode ? "Log Out" : "Log In"} </span>
         </div>  
     )
     }

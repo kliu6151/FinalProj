@@ -85,7 +85,8 @@ app.get('/comments', async(req,res) => {
 
 app.post('/addTag', async(req, res) => {
     try{
-    let newTag = new tagDb({name: req.body.name});
+        const {name, createdBy} = req.body
+    let newTag = new tagDb({name, createdBy});
     await newTag.save()
     res.json(newTag);
     }
@@ -110,7 +111,6 @@ app.post('/addAnswer', async(req, res) => {
     try {
     const {text, ans_by, ans_date_time} = req.body
     let newAnswer = new answerDb({text, ans_by, ans_date_time});
-    // res.send()
     await newAnswer.save()
     }
     catch(error) {
@@ -120,11 +120,21 @@ app.post('/addAnswer', async(req, res) => {
 
 app.post('/addUser', async(req,res) => {
     try{
-    const {username, password, email, reputation,votedOn} = req.body;
-    let newUser = new userDb({username, password, email, reputation,votedOn});
+    const {username, password, email, reputation, votedOn, createdOn} = req.body;
+    let newUser = new userDb({username, password, email, reputation, votedOn, createdOn});
     newUser.password = newUser.createHash(newUser.password);
     await newUser.save();
-    console.log(newUser)
+    }
+    catch(err) {
+        console.log(err)
+    }
+});
+
+app.post('/addComment', async(req,res) => {
+    try{
+    const {text, ans_by, ans_date_time} = req.body;
+    let newComment = new commentDb({text, ans_by, ans_date_time});
+    await newComment.save();
     }
     catch(err) {
         console.log(err)
@@ -133,13 +143,7 @@ app.post('/addUser', async(req,res) => {
 
 app.post('/login', async (req, res) => {
     try{
-        // console.log(req.body.email)
        await userDb.findOne({email: req.body.email}, function(err, user) {
-        // console.log(user);
-        // console.log(req.body.password)
-        // console.log(user.password);
-        // console.log(req.body);
-        // console.log(req.body.password)
         if(req.body.password === null) {
             req.body.password = "";
         }
@@ -159,42 +163,144 @@ app.put('/updateQuestion', async(req,res) => {
     
     const updateQuestion = req.body.upAns;
     const id = req.body.id
-    // console.log(id._id);
-    // console.log(questionDb.findById(id._id));
-    // console.log(updateQuestion);
+
     try {
             await questionDb.findById(id._id, (error, questionToUpdate) => {
             questionToUpdate.answers.unshift(updateQuestion)
             questionToUpdate.views++;
             questionToUpdate.save();
-            // console.log(error);
         }).clone();
     }
     catch(err) {
         console.log(err);
     }
     res.send("Updated");
+})
 
+app.put('/updateQuestionComment', async(req,res) => {
+    
+    const updateQuestion = req.body.upCom;
+    const id = req.body.id
+    try {
+            await questionDb.findById(id._id, (error, questionToUpdate) => {
+            questionToUpdate.comments.unshift(updateQuestion)
+            questionToUpdate.markModified('comments')
+            questionToUpdate.save();
+        }).clone();
+    }
+    catch(err) {
+        console.log(err);
+    }
+    res.send("Updated");
+})
 
-    // let updateQuestion = new answerDb({text,ans_by,ans_date_time});
-    // await updateQuestion.save();
+app.put('/updateAnswerComment', async(req,res) => {
+    
+    const updateQuestion = req.body.upCom;
+    const id = req.body.id
+    try {
+            await answerDb.findById(id._id, (error, questionToUpdate) => {
+            questionToUpdate.comments.unshift(updateQuestion)
+            questionToUpdate.markModified('comments')
+            questionToUpdate.save();
+        }).clone();
+    }
+    catch(err) {
+        console.log(err);
+    }
+    res.send("Updated");
+})
+
+app.put('/updateAnswerCommentPageUp', async(req,res) => {
+    try {
+            await answerDb.findById(req.body._id, (error, answerToUpdate) => {
+            answerToUpdate.comPage = req.body.comPage + 1
+            answerToUpdate.markModified('commPage')
+            answerToUpdate.save();
+        }).clone();
+    }
+    catch(err) {
+        console.log(err);
+    }
+    res.send("Updated");
+})
+app.put('/updateAnswerCommentPageDown', async(req,res) => {
+
+    try {
+            await answerDb.findById(req.body._id, (error, answerToUpdate) => {
+            answerToUpdate.comPage = req.body.comPage - 1
+            answerToUpdate.markModified('commPage')
+            answerToUpdate.save();
+        }).clone();
+    }
+    catch(err) {
+        console.log(err);
+    }
+    res.send("Updated");
+})
+
+app.put('/updateAnswerCommentPageReset', async(req,res) => {
+
+    try {
+            await answerDb.find({}, (error, answerToUpdate) => {
+                for(let i = 0; i < answerToUpdate.length; i++) {
+                    answerToUpdate[i].comPage = 1
+                    answerToUpdate[i].save();
+                }
+            
+        }).clone();
+    }
+    catch(err) {
+        console.log(err);
+    }
+    res.send("Updated");
 })
 
 app.put('/updateAnswerVoteUp', async(req,res) => {
     
     const updateAnswer = req.body.currA
     const currU = req.body.currU
-    // console.log(id._id);
-    // console.log(questionDb.findById(id._id));
-    // console.log(updateQuestion);
+
     try {
             await answerDb.findById(updateAnswer._id, (error, AnswerToUpdate) => {
             AnswerToUpdate.votes++;
-            // console.log(AnswerToUpdate)
             AnswerToUpdate.save();
         }).clone();
         await userDb.find( {username: currU.username}, (error, UserToUpdate) => {
-            // console.log(UserToUpdate)
+            if(!UserToUpdate[0].votedOn.includes(updateAnswer._id)) {
+                UserToUpdate[0].reputation+=5;
+                UserToUpdate[0].votedOn.unshift(updateAnswer._id + "UP");
+                UserToUpdate[0].save()
+            }
+            else if(UserToUpdate[0].votedOn.includes(updateAnswer._id + "DOWN")) {
+                    UserToUpdate[0].reputation+=5;
+                    for(let i = 0; i < UserToUpdate[0].votedOn.length; i++) {
+                        if(UserToUpdate[0].votedOn[i] === updateAnswer._id) {
+                            UserToUpdate[0].votedOn[i] = updateAnswer._id + "UP"
+                        }
+                    }
+                    UserToUpdate[0].save()
+            }
+        }).clone();
+    }
+    catch(err) {
+        console.log(err);
+    }
+
+    res.send("Updated");
+})
+
+app.put('/updateQuestionVoteUp', async(req,res) => {
+    
+    const updateAnswer = req.body.currQ
+    const currU = req.body.currU
+
+    try {
+            await questionDb.findById(updateAnswer._id, (error, AnswerToUpdate) => {
+            AnswerToUpdate.votes++;
+            AnswerToUpdate.save();
+        }).clone();
+        await userDb.find( {username: currU.username}, (error, UserToUpdate) => {
             if(!UserToUpdate[0].votedOn.includes(updateAnswer._id)) {
                 UserToUpdate[0].reputation+=5;
                 UserToUpdate[0].votedOn.unshift(updateAnswer._id + "UP");
@@ -220,19 +326,48 @@ app.put('/updateAnswerVoteUp', async(req,res) => {
 
 app.put('/updateAnswerVoteDown', async(req,res) => {
     
-    const updateAnswer = req.body
+    const updateAnswer = req.body.currA
     const currU = req.body.currU
-    // console.log(id._id);
-    // console.log(questionDb.findById(id._id));
-    // console.log(updateQuestion);
+
     try {
             await answerDb.findById(updateAnswer._id, (error, AnswerToUpdate) => {
-            console.log(AnswerToUpdate)
             AnswerToUpdate.votes--;
             AnswerToUpdate.save();
         }).clone();
         await userDb.find( {username: currU.username}, (error, UserToUpdate) => {
-            // console.log(UserToUpdate)
+            if(!UserToUpdate[0].votedOn.includes(updateAnswer._id)) {
+                UserToUpdate[0].reputation-=10;
+                UserToUpdate[0].votedOn.unshift(updateAnswer._id + "DOWN");
+                UserToUpdate[0].save()
+            }
+            else if(UserToUpdate[0].votedOn.includes(updateAnswer._id + "UP")) {
+                    UserToUpdate[0].reputation-=10;
+                    for(let i = 0; i < UserToUpdate[0].votedOn.length; i++) {
+                        if(UserToUpdate[0].votedOn[i] === updateAnswer._id) {
+                            UserToUpdate[0].votedOn[i] = updateAnswer._id + "DOWN"
+                        }
+                    }
+                    UserToUpdate[0].save()
+            }
+        }).clone();
+    }
+    catch(err) {
+        console.log(err);
+    }
+    res.send("Updated");
+})
+
+app.put('/updateQuestionVoteDown', async(req,res) => {
+    
+    const updateAnswer = req.body.currQ
+    const currU = req.body.currU
+
+    try {
+            await questionDb.findById(updateAnswer._id, (error, AnswerToUpdate) => {
+            AnswerToUpdate.votes--;
+            AnswerToUpdate.save();
+        }).clone();
+        await userDb.find( {username: currU.username}, (error, UserToUpdate) => {
             if(!UserToUpdate[0].votedOn.includes(updateAnswer._id)) {
                 UserToUpdate[0].reputation-=10;
                 UserToUpdate[0].votedOn.unshift(updateAnswer._id + "DOWN");

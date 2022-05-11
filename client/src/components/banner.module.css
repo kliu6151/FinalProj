@@ -29,7 +29,7 @@
     font-size: larger;
 }
 
-#Q:hover, #T:hover, #profile:hover, #logout:hover {
+#Q:hover, #T:hover, #profile:hover, #logout:hover, #login:hover {
     color: darkgray;
     background-color: rgb(104, 102, 102);
 }
@@ -48,4 +48,8 @@
 
 .tTestB {
     color:blue;
+}
+
+#NA {
+    display: none;
 }

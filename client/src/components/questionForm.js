@@ -55,8 +55,8 @@ class QuestionForm extends React.Component {
         })
     }
     
-    isValidQ = async() =>  {
-        
+    isValidQ = async(e) =>  {
+    e.preventDefault();
         let currU = this.props.currUser;
     
 
@@ -104,6 +104,7 @@ class QuestionForm extends React.Component {
                 else {
                     let T = {
                         name: newKeyWords[i],
+                        createdBy: this.props.currUser.username
                     };
                     await axios.post('http://localhost:8000/addTag', T);
                     tidArr.push(T);
@@ -121,39 +122,22 @@ class QuestionForm extends React.Component {
     // }
 
     if(this.state.inValidName === false && this.state.inValidText === false && this.state.inValidTitle === false && this.state.inValidTag === false) {
-        this.submitQuestion()
+        this.submitQuestion(tidArr)
     }
     else {
         return false
     }   
   }
 
-    submitQuestion = async () => {
-
-        let newKeyWords = document.getElementById(styles["QTag"]).value.split(" ");
-        let tidArr = [];
-        let modelTags = this.props.modelTags;
-        for (let i = 0; i < newKeyWords.length; i++) {
-            if (modelTags.some((x) => x.name === newKeyWords[i])) {
-                tidArr.push(
-                modelTags.find((x) => x.name === newKeyWords[i])
-                );
-            } else {
-
-                    let T = {
-                        name: newKeyWords[i],
-                    };
-                    await axios.post('http://localhost:8000/addTag', T);
-                    tidArr.push(T);
-                
-            }
-        }
+    submitQuestion = async (tidArr) => {
+        
         let questionData = {
             title: document.getElementById(styles["QTitle"]).value,
             text: document.getElementById(styles["QText"]).value,
             tags: tidArr,
             asked_by: this.props.currUser.username,
-            answers: []
+            answers: [],
+            comments: []
         }
 
         this.props.handlerModelUpdate(questionData)

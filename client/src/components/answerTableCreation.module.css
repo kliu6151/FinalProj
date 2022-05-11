@@ -102,7 +102,7 @@
 .comText {
     width:100%;
     vertical-align: top;
-    overflow-wrap: break-word;
+  overflow-wrap: break-word;
   word-wrap: break-word;
   -ms-word-break: break-all;
   word-break: break-word;
@@ -123,4 +123,12 @@
 
 #blurredLeftA:active, #blurredRightA:active {
     border-style:outset;
+}
+
+#NA {
+    display:none;
+}
+
+#ta {
+    display:block;
 }

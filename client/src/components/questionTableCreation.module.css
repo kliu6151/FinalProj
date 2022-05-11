@@ -1,6 +1,6 @@
 #horiLine {
     width: 100%;
-    /* position: fixed; */
+    position: absolute;
     margin: .5px;
     border: none;
     border-top: dotted 2px black;
@@ -59,4 +59,16 @@ table {
 
 .askAt {
     color: teal;
+}
+
+#blurredLeftA, #blurredRightA {
+    opacity: .5;
+    filter: alpha(opacity=50);
+    background:none;
+    border-color:white;
+
+}
+
+#blurredLeftA:active, #blurredRightA:active {
+    border-style:outset;
 }

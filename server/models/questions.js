@@ -17,7 +17,8 @@ var questionSchema = new Schema({
     asked_by: {type: String, default: "Anonymous"},
     ask_date_time: {type: Date, default: Date.now},
     views: {type: Number, default: 0},
-    votes: {type: Number, default: 0}
+    votes: {type: Number, default: 0},
+    comPage: {type: Number, default: 1}
 
     // url: String
 });

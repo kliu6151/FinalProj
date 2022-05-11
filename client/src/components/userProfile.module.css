@@ -1,0 +1,21 @@
+#FirstRow {
+    width: 100%;
+}
+
+.sideBar {
+    width:20%;
+    float:left;
+    display: inline;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.sideBar li {
+    padding-top:5%;
+}
+
+.infoBar {
+    width:80%;
+    float:right;
+
+}

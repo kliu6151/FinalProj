@@ -33,18 +33,18 @@ class LogIn extends React.Component {
         e.preventDefault();
 
         var userDb = this.props.dataU;
-        let isValid = true; 
-        let U = null;
+        if(userDb.length !== 0) {
         // console.log("in here");
         // console.log(this.state.e);
-        let x = userDb.find(c => c.email);
+        let x = userDb.find(c => c.email === this.state.e);
         if(x.email === this.state.e) {
             let U = {
                 username: x.username,
                 email: this.state.e,
                 password: this.state.p,
                 reputation: x.reputation,
-                votedOn: x.votedOn
+                votedOn: x.votedOn,
+                createdOn: x.createdOn
             }
             // console.log(x);
             let isBadPw = true;
@@ -58,7 +58,7 @@ class LogIn extends React.Component {
                 this.setState({invalidPw : true})
 
             }
-            // console.log(fetch('http://localhost:8000/login'))
+        }
         }
         else {
             this.setState({invalidPw : false})
@@ -73,7 +73,13 @@ class LogIn extends React.Component {
     }
 
     signUp = (e) => {
+        e.preventDefault();
         this.props.handlerForSignUpPage();
+    }
+
+    guestMode = (e) => {
+        e.preventDefault();
+        this.props.handlerForGuestMode();
     }
 
     render() {

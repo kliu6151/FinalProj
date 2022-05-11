@@ -9,7 +9,7 @@ class ValidNewUserEmail extends React.Component {
     
     render() {
         return (
-            <div className = {styles.invalidNewUserName}>Email already in use!</div>
+            <div className = {styles.invalidNewUserName}>invalid Email!</div>
 
         );
     }

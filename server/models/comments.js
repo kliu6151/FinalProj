@@ -7,8 +7,6 @@ var mongoose = require('mongoose')
 var commentSchema = new Schema({
     text: String,
     ans_by: {type: String, default: "Anonymous"},
-    ask_date_time: {type: Date, default: Date.now},
-
 
     // url: String
 });

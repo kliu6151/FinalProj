@@ -4,6 +4,9 @@ import React from 'react';
 class InsideQ extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currQPage: 1
+        }
 
     }
 
@@ -12,19 +15,21 @@ class InsideQ extends React.Component {
         this.props.handlerChangingSpecificA(e)
     }
 
-    renderNextPage = () => {
+    renderNextPage = (e) => {
+        e.preventDefault();
         let z = this.props.currPage;
         z += 1;
         var quest = this.props.specificQ;
         var ans = this.props.answerData;
-
+        console.log(this.generateAnswers(quest.answers,ans).slice((z-1)*5, (z * 5)))
         if(this.generateAnswers(quest.answers,ans).slice((z-1)*5, (z * 5)).length !== 0) {
-
+            // console.log("HUHUUH");
             this.props.handlerForNextAnsPage(z);
         }
     }
 
-    renderPrevPage = () => {
+    renderPrevPage = (e) => {
+        e.preventDefault();
         let z = this.props.currPage;
         z -= 1;
         if(z !== 0) {
@@ -32,54 +37,139 @@ class InsideQ extends React.Component {
         }
     }
 
-    handlerForAnswerVoteUp = (currA) => {
+    handlerForAnswerVoteUp = (event,currA) => {
+        event.preventDefault();
+        let t = this.props.userData;
+        let currU = t.find((e) => e.username === currA.ans_by);
+        console.log(currU)
         if(this.props.currUser.reputation >= 100) {
             if(!this.props.currUser.votedOn.includes(currA._id + "UP"))
             {
-                const me = (e) => {
-                    e.preventDefault();
-
-
-                    this.props.handlerForAnswerVoteUp(currA)
-            }
-                return me;
+                    this.props.handlerForAnswerVoteUp(this.props.currUser,currA)
             }
         }
 
     }
 
-    handlerForAnswerVoteDown = (currA) => {
+    handlerForAnswerVoteDown = (event,currA) => {
+        event.preventDefault();
+        let t = this.props.userData;
+        let currU = t.find((e) => e.username === currA.ans_by);
+        // console.log(currU)
         if(this.props.currUser.reputation >= 100) {
             if(!this.props.currUser.votedOn.includes(currA._id + "DOWN"))
-            {
-                const me = (e) => {
-                    e.preventDefault();
-                    this.props.handlerForAnswerVoteDown(currA)
+                {
+                    this.props.handlerForAnswerVoteDown(this.props.currUser,currA)
                 }
-                return me;
-            }
+
         }
     }
 
-    handlerForQuestionVoteUp = (currQ) => {
+    handlerForQuestionVoteUp = (event,currQ) => {
+        event.preventDefault();
+        let t = this.props.userData;
+        let currU = t.find((e) => e.username === currQ.asked_by);
+        console.log(currU)
         if(!this.props.currUser.votedOn.includes(currQ._id + "UP"))
             {
-                const me = (e) => {
-                    e.preventDefault();
-                    this.props.handlerForAnswerVoteUp(currQ)
-            }
-                return me;
+                console.log("HI")
+                this.props.handlerForQuestionVoteUp(this.props.currUser,currQ)
             }
     }
 
-    handlerForQuestionVoteDown = (currQ) => {
+    handlerForQuestionVoteDown = (event,currQ) => {
+        event.preventDefault();
+        let t = this.props.userData;
+        let currU = t.find((e) => e.username === currQ.asked_by);
+        console.log(currU)
         if(!this.props.currUser.votedOn.includes(currQ._id + "DOWN"))
         {
-            const me = (e) => {
-                e.preventDefault();
-                this.props.handlerForAnswerVoteDown(currQ)
+                this.props.handlerForQuestionVoteDown(this.props.currUser,currQ)
+
+        }
+    }
+
+    onEnterCommentQuestion = (event,quest) => {
+        if(event.charCode === 13)
+        {
+            // this.handlerForComRenderedF();
+            event.preventDefault();
+            let t = event.target.value;
+            let C = {
+                text: t,
+                ans_by: this.props.currUser.username,
             }
-            return me;
+            // console.log(C)
+            // this.props.specificQ.comments.unshift(C);
+            this.props.handlerForQuestionComments(C);
+            // this.handlerForComRenderedT();
+        }
+    }
+
+    onEnterCommentAnswer = (event, currA) => {
+        if(event.charCode === 13)
+        {
+            // this.handlerForComRenderedF();
+            console.log(currA);
+            event.preventDefault();
+            let t = event.target.value;
+            console.log(t)
+            let C = {
+                text: t,
+                ans_by: this.props.currUser.username,
+            }
+            // console.log(C)
+            // this.props.specificQ.comments.unshift(C);
+            this.props.handlerForAnswerComments(C,currA);
+            // this.handlerForComRenderedT();
+        }
+    }
+
+    renderNextQComPage = (e) => {
+        e.preventDefault();
+        let z = this.props.specificQ.comPage;
+        z += 1;
+        var quest = this.props.specificQ.comments;
+        if(quest.slice((z-1)*3, (z * 3)).length !== 0) {
+            this.props.specificQ.comPage +=1
+            this.props.handlerForNextQComPage();
+        }
+    }
+
+    renderPrevQComPage = (e) => {
+        e.preventDefault();
+        // let z = this.state.currPage;
+        let z = this.props.specificQ.comPage;
+        z -= 1;
+        if(z !== 0) {
+            this.props.specificQ.comPage -=1
+            this.props.handlerForPrevQComPage()
+        }
+    }
+
+    renderNextAComPage = (event,currA) => {
+        event.preventDefault();
+        // let z = this.state.currQPage;
+        // console.log(this.props.specificQ.comPage);
+        let z = currA.comPage;
+        z += 1;
+        var quest = currA.comments;
+        console.log(z)
+        if(quest.slice((z-1)*3, (z * 3)).length !== 0) {
+            // currA.comPage +=1
+            this.props.handlerForNextAComPage(currA);
+        }
+    }
+
+    renderPrevAComPage = (event,currA) => {
+        event.preventDefault();
+
+        // let z = this.state.currPage;
+        let z = currA.comPage;
+        z -= 1;
+        if(z !== 0) {
+            // currA.comPage -=1
+            this.props.handlerForPrevAComPage(currA)
         }
     }
 
@@ -87,8 +177,9 @@ class InsideQ extends React.Component {
     var quest = this.props.specificQ;
     var ans = this.props.answerData;
     var tag = this.props.tagData;
+    var com = this.props.commentData;
     
-
+    // console.log(quest.comments.length)
     return (
         <>
         <table className = {styles.wholeAnswerTable}>
@@ -98,9 +189,9 @@ class InsideQ extends React.Component {
                         {++quest.views} Views
                         <br />
                         <br />
-                        <div onClick = {this.handlerForAnswerVoteUp(quest)}>&#x2191;</div>
+                        <div onClick = {(e) => {this.handlerForQuestionVoteUp(e,quest)}} id = {!this.props.guestMode ? null : styles["invis"]}>&#x2191;</div>
                         Votes: {quest.votes}
-                        <div onClick = {this.handlerForAnswerVoteDown(quest)}>&#x2193;</div>
+                        <div onClick = {(e) => {this.handlerForQuestionVoteDown(e,quest)}} id = {!this.props.guestMode ? null : styles["invis"]}>&#x2193;</div>
                     </td>
                     <td className = {styles.secondCol}>
                         {quest.text}
@@ -112,6 +203,27 @@ class InsideQ extends React.Component {
                             <td className = {styles.questionsTag}>{name}</td>
                             ))}
                         </table>
+                        <br />
+                            {}
+                            {this.generateAnswers(quest.comments,com).slice((quest.comPage-1)*3, (quest.comPage * 3)).map((name) => (
+                            <>
+                                <div className = {styles.comText}>
+                                    {name.text}
+                                        <span className = {styles.comBy}>
+                                            Ans By {name.ans_by} 
+                                        </span>
+                                </div>
+                            {/* </tr> */}
+                            </>
+                            ))}
+                            {/* {console.log(Math.ceil(quest.comments.length / 3))} */}
+                            {console.log()}
+                        <button id = {quest.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {this.renderPrevQComPage}>&#x2190;</button>
+                        <button id = {quest.comments.length !== 0 && Math.ceil(quest.comments.length / 3) !== quest.comPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextQComPage}>&#x2192;</button>
+                         
+                        <br />
+                            {!this.props.guestMode ? <input type = "text" id = {styles["commentInput"]} onKeyPress = {(e) => {this.onEnterCommentQuestion(e,quest)}} name = "Comment" /> : null }
+                        <br />
                     </td>
                     <td className = {styles.thirdCol}>
                         <span className = {styles.ansBy}>
@@ -129,7 +241,6 @@ class InsideQ extends React.Component {
                 </tr>
             </tbody>
         </table>
-        <textarea id = {styles["AText"]} name = "AText"> </textarea> 
              <hr id = {styles["horiLine"]}/>
         <table className = { styles.wholeAnswerTable}>
             <tbody>
@@ -138,12 +249,32 @@ class InsideQ extends React.Component {
                         <>
                         <tr>
                             <td className= {styles.firstColA}>
-                                <div onClick = {this.handlerForAnswerVoteUp(name)}>&#x2191;</div>
+                                <div onClick = {(e) => {this.handlerForAnswerVoteUp(e,name)}} id = {!this.props.guestMode ? null : styles["invis"]}>&#x2191;</div>
                                 <span >Votes: {name.votes}</span>
-                                <div onClick = {this.handlerForAnswerVoteDown(name)}>&#x2193;</div>
+                                <div onClick = {(e) => {this.handlerForAnswerVoteDown(e,name)}} id = {!this.props.guestMode ? null : styles["invis"]}>&#x2193;</div>
                             </td>
                             <td className = {styles.answerText}>
                                 {name.text}
+                                <br />
+                                <br />
+                                <br />
+                                {this.generateAnswers(name.comments,com).slice((name.comPage-1)*3, (name.comPage * 3)).map((name) => (
+                                    <>
+                                    <div className = {styles.comText}>
+                                        {name.text}
+                                            <span className = {styles.comBy}>
+                                                Ans By {name.ans_by} 
+                                            </span>
+                                    </div>
+                                    </>
+                                ))}
+                                <br />
+                                <button id = {name.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {(e) => {this.renderPrevAComPage(e,name)}}>&#x2190;</button>
+                                <button id = {name.comments.length !== 0 && Math.ceil(name.comments.length / 3) !== name.comPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {(e) => {this.renderNextAComPage(e,name)}}>&#x2192;</button>
+                                <br />
+                                    {!this.props.guestMode ? <input type = "text" id = {styles["commentInput"]} onKeyPress = {(e) => {this.onEnterCommentAnswer(e,name)}} name = "Comment" /> : null}
+                                <br />
+
                             </td>
                             <td className = {styles.thirdCol}>
                                 <span className = {styles.ansBy}>
@@ -159,14 +290,17 @@ class InsideQ extends React.Component {
                                 </span>
                             </td>
                         </tr>
-             <hr id = {styles["horiLine"]}/>
+                        <hr id = {styles["horiLine"]}/>
+
                         </>
+
                     ))}
+
                 {/* </tr> */}
             </tbody>
         </table>
-        <button id = {styles["leftA"]} onClick = {this.renderPrevPage}>&#x2190;</button>
-            <button id = {styles["rightA"]} onClick = {this.renderNextPage}>&#x2192;</button>
+        <button id = {this.props.currPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {this.renderPrevPage}>&#x2190;</button>
+            <button id = {quest.answers.length !== 0 && Math.ceil(quest.answers.length / 5) !== this.props.currPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextPage}>&#x2192;</button>
             {!this.props.guestMode ? 
                   <div id = {styles["answerButtonContainer"]} > 
                     <button id = {styles["answerButton"]} onClick={(e) => this.clickSpecA(e)}>
@@ -193,6 +327,8 @@ generateTime = (curDate) => {
 
   generateAnswers = (qAnsArr, allAnsArr) => {
       let arrName = [];
+    //   console.log(qAnsArr)
+    //   console.log(allAnsArr)
     for (let i = 0; i < qAnsArr.length; i++) {
         // console.log(qAnsArr);
         for(let j = 0; j < allAnsArr.length; j++) {
@@ -200,12 +336,14 @@ generateTime = (curDate) => {
             // console.log(qAnsArr[i].text + "\n");
             if(qAnsArr[i].text === allAnsArr[j].text) {
                 // console.log("HU");
+                // console.log(allAnsArr[j])
                 arrName.push(allAnsArr[j]);
             }
         }
     }
     return arrName;
   }
+
 
   generateTags = (qquestions, tquestions) => {
     let count = 0;
