@@ -118,9 +118,12 @@
     filter: alpha(opacity=50);
     background:none;
     border-color:white;
+    display: inline;
 
 }
 
 #blurredLeftA:active, #blurredRightA:active {
     border-style:outset;
+    display: inline;
+
 }

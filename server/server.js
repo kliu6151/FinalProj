@@ -1,12 +1,13 @@
+const mongodb = require("mongoose");
+const mongourl = "mongodb://127.0.0.1:27017/fake_so"
+mongodb.connect(mongourl)
+
+
 const answerDb = require('./models/answers')
 const questionDb = require('./models/questions')
 const tagDb = require('./models/tags')
 const userDb = require('./info/user.js')
 const commentDb = require('./models/comments');
-
-const mongodb = require("mongoose");
-const mongourl = "mongodb://127.0.0.1:27017/fake_so"
-mongodb.connect(mongourl)
 
 const port = 8000;
 
@@ -19,6 +20,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+
+var admin = new userDb();
+admin.username = 'admin';
+admin.email = 'admin@admin.com';
+admin.password = admin.createHash('admin');
+admin.reputation = 100;
+admin.save();
 
 
 app.get('/tags', async (req, res) => {

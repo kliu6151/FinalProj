@@ -88,8 +88,8 @@ class TableCreate extends React.Component {
                 ))}
             </tbody>
         </table>
-            <button id = {currentPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {this.renderPrevPage}>&#x2190;</button>
-            <button id = {quest.length !== 0 && Math.ceil(quest.length / 5) !== currentPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextPage}>&#x2192;</button>
+            <button id = {quest.length === 0 ? styles["invisible"] : (currentPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])}  onClick = {this.renderPrevPage}>&#x2190;</button>
+            <button id = {quest.length === 0 ? styles["invisible"] : (quest.length !== 0 && Math.ceil(quest.length / 5) !== currentPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {this.renderNextPage}>&#x2192;</button>
 
         </div>
     );

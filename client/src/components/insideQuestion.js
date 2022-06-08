@@ -218,8 +218,8 @@ class InsideQ extends React.Component {
                             ))}
                             {/* {console.log(Math.ceil(quest.comments.length / 3))} */}
                             {console.log()}
-                        <button id = {quest.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {this.renderPrevQComPage}>&#x2190;</button>
-                        <button id = {quest.comments.length !== 0 && Math.ceil(quest.comments.length / 3) !== quest.comPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextQComPage}>&#x2192;</button>
+                        <button id = {quest.comments.length === 0 ? styles["invis"] : (quest.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])} onClick = {this.renderPrevQComPage}>&#x2190;</button>
+                        <button id = {quest.comments.length === 0 ? styles["invis"] : (quest.comments.length !== 0 && Math.ceil(quest.comments.length / 3) !== quest.comPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {this.renderNextQComPage}>&#x2192;</button>
                          
                         <br />
                             {!this.props.guestMode ? <input type = "text" id = {styles["commentInput"]} onKeyPress = {(e) => {this.onEnterCommentQuestion(e,quest)}} name = "Comment" /> : null }
@@ -269,8 +269,8 @@ class InsideQ extends React.Component {
                                     </>
                                 ))}
                                 <br />
-                                <button id = {name.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {(e) => {this.renderPrevAComPage(e,name)}}>&#x2190;</button>
-                                <button id = {name.comments.length !== 0 && Math.ceil(name.comments.length / 3) !== name.comPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {(e) => {this.renderNextAComPage(e,name)}}>&#x2192;</button>
+                                <button id = {name.comments.length === 0 ? styles["invis"] : (name.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])} onClick = {(e) => {this.renderPrevAComPage(e,name)}}>&#x2190;</button>
+                                <button id = {name.comments.length === 0 ? styles["invis"] : (name.comments.length !== 0 && Math.ceil(name.comments.length / 3) !== name.comPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {(e) => {this.renderNextAComPage(e,name)}}>&#x2192;</button>
                                 <br />
                                     {!this.props.guestMode ? <input type = "text" id = {styles["commentInput"]} onKeyPress = {(e) => {this.onEnterCommentAnswer(e,name)}} name = "Comment" /> : null}
                                 <br />
@@ -299,8 +299,8 @@ class InsideQ extends React.Component {
                 {/* </tr> */}
             </tbody>
         </table>
-        <button id = {this.props.currPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {this.renderPrevPage}>&#x2190;</button>
-            <button id = {quest.answers.length !== 0 && Math.ceil(quest.answers.length / 5) !== this.props.currPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextPage}>&#x2192;</button>
+        <button id = {quest.answers.length === 0 ? styles["invis"] : (this.props.currPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])} onClick = {this.renderPrevPage}>&#x2190;</button>
+        <button id = {quest.answers.length === 0 ? styles["invis"] : (quest.answers.length !== 0 && Math.ceil(quest.answers.length / 5) !== this.props.currPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {this.renderNextPage}>&#x2192;</button>
             {!this.props.guestMode ? 
                   <div id = {styles["answerButtonContainer"]} > 
                     <button id = {styles["answerButton"]} onClick={(e) => this.clickSpecA(e)}>

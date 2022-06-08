@@ -408,6 +408,8 @@ export default class FakeStackOverflow extends React.Component {
       insideAQ: false,
       showhideGuestMode: false,
       showhideProfilePage:false,
+      guestMode: false,
+      showhideWelcome: false
 
     })
   }
@@ -716,9 +718,9 @@ export default class FakeStackOverflow extends React.Component {
       showhideTable: false,
       showhideWelcome: true,
       showhideSignUp: false,
-      showhideLogIn: false,
+      showhideLogIn: true,
       showhideProfilePage:false,
-      showhideGuestMode:false
+      showhideGuestMode:true
     })
   }
 
@@ -730,6 +732,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideProfilePage: true,
       showhideTags: false,
       showhideSearch:false,
+      showhideTagSearch: false
     })
   }
 

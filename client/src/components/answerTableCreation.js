@@ -18,7 +18,7 @@ class TableCreateAnswer extends React.Component {
     renderNextPage = () => {
         let z = this.props.currPage;
         z += 1;
-        var quest = this.props.questionData;
+        var quest = this.props.answerData;
         if(quest.slice((z-1)*5, (z * 5)).length !== 0) {
             this.props.handlerForNextPage(z);
         }
@@ -82,8 +82,8 @@ class TableCreateAnswer extends React.Component {
                                     </>
                                 ))}
                                 <br />
-                                <button id = {questions.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {(e) => {this.renderPrevAComPage(e,questions)}}>&#x2190;</button>
-                                <button id = {questions.comments.length !== 0 && Math.ceil(questions.comments.length / 3) !== questions.comPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {(e) => {this.renderNextAComPage(e,questions)}}>&#x2192;</button>
+                                <button id = {questions.comments.length === 0 ? styles["invis"] : (questions.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])} onClick = {(e) => {this.renderPrevAComPage(e,questions)}}>&#x2190;</button>
+                                <button id = {questions.comments.length === 0 ? styles["invis"] : (questions.comments.length !== 0 && Math.ceil(questions.comments.length / 3) !== questions.comPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {(e) => {this.renderNextAComPage(e,questions)}}>&#x2192;</button>
                                 <br />
                                 <button onClick = {this.handlerForEditAnswer}> Edit Answer </button>
                                 <br />
@@ -108,8 +108,8 @@ class TableCreateAnswer extends React.Component {
                 ))}
             </tbody>
         </table>
-            <button id = {currentPage !== 1 ? styles["leftA"] : styles["blurredLeftA"]} onClick = {this.renderPrevPage}>&#x2190;</button>
-            <button id = {quest.length !== 0 && Math.ceil(quest.length / 5) !== currentPage ? styles["rightA"] : styles["blurredRightA"]} onClick = {this.renderNextPage}>&#x2192;</button>
+            <button id = {quest.length === 0 ? styles["invis"] : (currentPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])} onClick = {this.renderPrevPage}>&#x2190;</button>
+            <button id = {quest.length === 0 ? styles["invis"] : (quest.length !== 0 && Math.ceil(quest.length / 5) !== currentPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {this.renderNextPage}>&#x2192;</button>
 
         </div>
     );

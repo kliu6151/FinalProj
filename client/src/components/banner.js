@@ -118,7 +118,7 @@ class BannerSection extends React.Component {
             </span>    
             <span id ={styles["Title"]}> FAKE STACK OVERFLOW</span>
             <input id = {styles["search"]} type = "text" placeholder="Search ..." name="search"  onKeyPress = {this.onEnter} />
-            <span id = {!this.props.guestMode ? styles["profile"] : null} onClick = {this.handlerForProfilePage}> {!this.props.guestMode ? this.props.currUser.username : null} </span>
+            <span id = {!this.props.guestMode ? styles["profile"] : null} onClick = {this.handlerForProfilePage}> {!this.props.guestMode ? this.props.currUser.username : "Guest"} </span>
             <span id = {!this.props.guestMode ? styles["logout"] : styles["login"]} onClick = {!this.props.guestMode ? this.logOut : this.logIn}> {!this.props.guestMode ? "Log Out" : "Log In"} </span>
         </div>  
     )
