@@ -82,6 +82,11 @@ class LogIn extends React.Component {
         this.props.handlerForGuestMode();
     }
 
+    handlerForWelcome =(e) => {
+        e.preventDefault();
+        this.props.handlerForWelcome();
+    }
+
     render() {
         const{ invalidE, invalidPw} = this.state
 
@@ -92,6 +97,7 @@ class LogIn extends React.Component {
                 {invalidE && <ValidNewUserEmail />}
 
             <div className={styles.logIn}>
+            <span onClick ={this.handlerForWelcome} id = {styles["leftArrow"]}></span>
                 <form id = {styles["wholeForm"]} onSubmit = {this.isValidLogIn}>
                     
                     <label>

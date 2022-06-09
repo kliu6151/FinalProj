@@ -68,7 +68,7 @@ class UserProfile extends React.Component {
                 </tbody>
             </table>
             <br />
-            <div>
+            <div className = {styles.flexContainer}>
                 <nav className = {styles.sideBar}>
                     <li onClick = {this.handlerForQuestionTable}>
                         Questions

@@ -3,15 +3,26 @@
 }
 
 .sideBar {
-    width:20%;
-    float:left;
+    margin-right:15%;
+    float:flex;
     display: inline;
     font-size: 15px;
     font-weight: bolder;
 }
 
+.flexContainer {
+    display: flex;
+}
 .sideBar li {
-    padding-top:5%;
+    padding-top:15%;
+    border-style: solid;
+    border-color: gray;
+    border-width: thin;
+}
+
+.sideBar li:hover {
+    color: rgb(240, 18, 18);
+  box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
 
 .infoBar {

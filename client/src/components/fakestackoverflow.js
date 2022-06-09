@@ -716,7 +716,7 @@ export default class FakeStackOverflow extends React.Component {
     this.setState({
       showhideQuestions: false,
       showhideTable: false,
-      showhideWelcome: true,
+      showhideWelcome: false,
       showhideSignUp: false,
       showhideLogIn: true,
       showhideProfilePage:false,
@@ -733,6 +733,14 @@ export default class FakeStackOverflow extends React.Component {
       showhideTags: false,
       showhideSearch:false,
       showhideTagSearch: false
+    })
+  }
+
+  handlerForWelcomePage = () => {
+    this.setState({
+      showhideLogIn: false,
+      showhideSignUp: false,
+      showhideWelcome: true,
     })
   }
 
@@ -802,11 +810,12 @@ export default class FakeStackOverflow extends React.Component {
                                  handlerForReturningUser = {this.handlerForReturningUser}
                                  handlerForSignUpPage = {this.handlerForSignUpPage}
                                  handlerForGuestMode = {this.handlerForGuestMode}
+                                handlerForWelcome = {this.handlerForWelcomePage}
                                   /> }
 
         {showhideSignUp && <SignUp  dataU = {this.state.users}
                                     handlerForRegister = {this.handlerForRegister}
-                                    handlerForLoggingIn = {this.handlerForLoggingIn}
+                                    handlerForWelcome = {this.handlerForWelcomePage}
                                     />}
         {showhideBanner && <BannerSection 
          dataQ = {this.state.questions}

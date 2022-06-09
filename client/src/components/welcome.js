@@ -27,8 +27,7 @@ class Welcome extends React.Component {
     return (
         <section className={Classes.welcome}>
 
-            <header>Welcome!</header>
-            <h1>FAKE STACK OVERFLOW</h1>
+            <h1 id = {Classes["title"]}>FAKE STACK OVERFLOW</h1>
             <h2 id = {Classes["returningUser"]}>Returning User? <span onClick = {this.logIn} id = {Classes["logIn"]}>Log In</span></h2>
             <h2 id = {Classes["newUser"]}>New User? <span onClick = {this.signUp} id = {Classes["signUp"]}>Sign Up</span></h2>
             <h2 id = {Classes["or"]}> OR </h2>

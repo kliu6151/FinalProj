@@ -74,9 +74,9 @@ class SignUp extends React.Component {
         }
     }
     
-    handlerForLoggingIn =(e) => {
+    handlerForWelcome =(e) => {
         e.preventDefault();
-        this.props.handlerForLoggingIn();
+        this.props.handlerForWelcome();
     }
     render() {
         const{ invalidU, invalidE, invalidPw, invalidPwNS} = this.state
@@ -95,7 +95,7 @@ class SignUp extends React.Component {
                 {invalidU && <ValidNewUserName />}
 
                 <div className={styles.logIn}>
-                    <span onClick ={this.handlerForLoggingIn}>&#x2190;</span>
+                    <span onClick ={this.handlerForWelcome} id = {styles["leftArrow"]}></span>
                     <form id = {styles["wholeForm"]} onSubmit={this.registerNewUser} >
                         <label for = "signName">
                             <b>User Name</b>    

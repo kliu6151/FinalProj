@@ -85,8 +85,6 @@ class TableCreateAnswer extends React.Component {
                                 <button id = {questions.comments.length === 0 ? styles["invis"] : (questions.comPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])} onClick = {(e) => {this.renderPrevAComPage(e,questions)}}>&#x2190;</button>
                                 <button id = {questions.comments.length === 0 ? styles["invis"] : (questions.comments.length !== 0 && Math.ceil(questions.comments.length / 3) !== questions.comPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {(e) => {this.renderNextAComPage(e,questions)}}>&#x2192;</button>
                                 <br />
-                                <button onClick = {this.handlerForEditAnswer}> Edit Answer </button>
-                                <br />
 
                             </td>
                         <td className = {styles.thirdCol}>
