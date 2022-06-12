@@ -92,17 +92,13 @@ class InsideQ extends React.Component {
     onEnterCommentQuestion = (event,quest) => {
         if(event.charCode === 13)
         {
-            // this.handlerForComRenderedF();
             event.preventDefault();
             let t = event.target.value;
             let C = {
                 text: t,
                 ans_by: this.props.currUser.username,
             }
-            // console.log(C)
-            // this.props.specificQ.comments.unshift(C);
             this.props.handlerForQuestionComments(C);
-            // this.handlerForComRenderedT();
         }
     }
 

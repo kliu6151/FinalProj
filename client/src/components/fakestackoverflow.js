@@ -772,9 +772,9 @@ export default class FakeStackOverflow extends React.Component {
     }
   }
   async componentDidMount() {
-    this.updatesInstantly()
-      
+    this.updatesInstantly()  
   }
+  
   updatesInstantly = async () => {
     await axios.get('http://localhost:8000/questions')
     .then(res => {

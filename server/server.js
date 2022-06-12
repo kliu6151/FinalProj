@@ -21,12 +21,20 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 
-var admin = new userDb();
-admin.username = 'admin';
-admin.email = 'admin@admin.com';
-admin.password = admin.createHash('admin');
-admin.reputation = 100;
-admin.save();
+
+function existingAdmin() {
+  userDb.findOne({username: "admin"}, (err, user) => {
+      if(!user) {
+        var admin = new userDb();
+        admin.username = 'admin';
+        admin.email = 'admin@admin.com';
+        admin.password = admin.createHash('admin');
+        admin.reputation = 100;
+        admin.save();
+      }
+  })}
+  
+  existingAdmin();
 
 
 app.get('/tags', async (req, res) => {
