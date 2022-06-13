@@ -33,12 +33,9 @@ class TableCreate extends React.Component {
 
     render() {
 
-    // var dat = this.props.data;
     var quest = this.props.questionData;
-    // console.log(this.props);
 
     var tag = this.props.tagData;
-    // console.log(quest);
     var currentPage = this.props.currPage;
     var currSetOfQuestions = quest.slice((currentPage-1)*5, (currentPage * 5));
     return (
