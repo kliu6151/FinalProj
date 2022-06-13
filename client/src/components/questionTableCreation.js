@@ -14,35 +14,17 @@ class TableCreate extends React.Component {
         this.props.handlerChangingSpecificQ(e,currentQ)
     }
 
-    renderNextPage = () => {
-        let z = this.props.currPage;
-        z += 1;
-        var quest = this.props.questionData;
-        if(quest.slice((z-1)*5, (z * 5)).length !== 0) {
-            this.props.handlerForNextPage(z);
-        }
-    }
-
-    renderPrevPage = () => {
-        let z = this.props.currPage;
-        z -= 1;
-        if(z !== 0) {
-            this.props.handlerForPrevPage(z)
-        }
-    }
 
     render() {
 
     var quest = this.props.questionData;
 
     var tag = this.props.tagData;
-    var currentPage = this.props.currPage;
-    var currSetOfQuestions = quest.slice((currentPage-1)*5, (currentPage * 5));
     return (
         <div>
         <table className = {styles.wholeQuestionTable}>
             <tbody>
-                {currSetOfQuestions.map((questions) => (
+                {quest.map((questions) => (
                     <>
                     <tr className = {styles.rowChild}>
                         <td className = {styles.firstCol}>
@@ -85,8 +67,6 @@ class TableCreate extends React.Component {
                 ))}
             </tbody>
         </table>
-            <button id = {quest.length === 0 ? styles["invisible"] : (currentPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])}  onClick = {this.renderPrevPage}>&#x2190;</button>
-            <button id = {quest.length === 0 ? styles["invisible"] : (quest.length !== 0 && Math.ceil(quest.length / 5) !== currentPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {this.renderNextPage}>&#x2192;</button>
 
         </div>
     );

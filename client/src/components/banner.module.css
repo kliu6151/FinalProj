@@ -34,22 +34,6 @@
     background-color: rgb(104, 102, 102);
 }
 
-.qTest {
-    color:gray;
-}
-
-.qTestB{
-    color:blue;
-}
-
-.tTest {
-    color:gray;
-}
-
-.tTestB {
-    color:blue;
-}
-
 #NA {
     display: none;
 }

@@ -143,31 +143,6 @@ class InsideQ extends React.Component {
         }
     }
 
-    renderNextAComPage = (event,currA) => {
-        event.preventDefault();
-        // let z = this.state.currQPage;
-        // console.log(this.props.specificQ.comPage);
-        let z = currA.comPage;
-        z += 1;
-        var quest = currA.comments;
-        console.log(z)
-        if(quest.slice((z-1)*3, (z * 3)).length !== 0) {
-            // currA.comPage +=1
-            this.props.handlerForNextAComPage(currA);
-        }
-    }
-
-    renderPrevAComPage = (event,currA) => {
-        event.preventDefault();
-
-        // let z = this.state.currPage;
-        let z = currA.comPage;
-        z -= 1;
-        if(z !== 0) {
-            // currA.comPage -=1
-            this.props.handlerForPrevAComPage(currA)
-        }
-    }
 
     render() {
     var quest = this.props.specificQ;
@@ -295,8 +270,7 @@ class InsideQ extends React.Component {
                 {/* </tr> */}
             </tbody>
         </table>
-        <button id = {quest.answers.length === 0 ? styles["invis"] : (this.props.currPage !== 1 ? styles["leftA"] : styles["blurredLeftA"])} onClick = {this.renderPrevPage}>&#x2190;</button>
-        <button id = {quest.answers.length === 0 ? styles["invis"] : (quest.answers.length !== 0 && Math.ceil(quest.answers.length / 5) !== this.props.currPage ? styles["rightA"] : styles["blurredRightA"])} onClick = {this.renderNextPage}>&#x2192;</button>
+
             {!this.props.guestMode ? 
                   <div id = {styles["answerButtonContainer"]} > 
                     <button id = {styles["answerButton"]} onClick={(e) => this.clickSpecA(e)}>
@@ -323,16 +297,12 @@ generateTime = (curDate) => {
 
   generateAnswers = (qAnsArr, allAnsArr) => {
       let arrName = [];
-    //   console.log(qAnsArr)
-    //   console.log(allAnsArr)
+
     for (let i = 0; i < qAnsArr.length; i++) {
-        // console.log(qAnsArr);
         for(let j = 0; j < allAnsArr.length; j++) {
-            // console.log(allAnsArr[j].text + "\n");
-            // console.log(qAnsArr[i].text + "\n");
+
             if(qAnsArr[i].text === allAnsArr[j].text) {
-                // console.log("HU");
-                // console.log(allAnsArr[j])
+
                 arrName.push(allAnsArr[j]);
             }
         }
@@ -346,13 +316,11 @@ generateTime = (curDate) => {
     let arrName = [];
     for(let i = 0; i < qquestions.tags.length; i++) {
         let tID = qquestions.tags[i]; 
-        // console.log(tID);
         for(let j = 0; j < tquestions.length; j++) {
             if(tID.name === tquestions[j].name) {
                 arrName.push(tquestions[j].name + " ");
                 count++; 
                 if(count === 4) {
-                  
                 }
             }
         }

@@ -11,31 +11,6 @@ class BannerSection extends React.Component {
         }
     }
 
-
-    handleQColor = () => {
-        this.setState ({
-            isQActive : true,
-            isTActive : false
-        })
-    }
-
-    handleTColor = () => {
-        this.setState ({
-            isTActive : true,
-            isQActive : false
-        })
-    }
-
-    trigger = () => {
-        this.props.handlerForTagPage();
-        this.handleTColor() 
-    }
-
-    homepage = () => {
-        this.props.handlerForHomePage();
-        this.handleQColor()        
-    }
-
   
      onEnter = (event) => {
         if(event.charCode === 13) {
@@ -103,22 +78,10 @@ class BannerSection extends React.Component {
 
     render() {
     return(
-        <div id={styles["banner"]}>
-            <span id ={styles["Q"]} 
-            onClick={this.homepage} 
-            className = {this.state.isQActive ? "styles.qTestB" : "styles.qTest"}
-            >
-            Questions
-            </span>
-            <span id ={styles["T"]} 
-            onClick = {this.trigger} 
-            className = {this.state.isTActive ? "styles.tTestB" : "styles.tTest"}
-            >
-            Tag
-            </span>    
+        <div id={styles["banner"]}> 
             <span id ={styles["Title"]}> FAKE STACK OVERFLOW</span>
             <input id = {styles["search"]} type = "text" placeholder="Search ..." name="search"  onKeyPress = {this.onEnter} />
-            <span id = {!this.props.guestMode ? styles["profile"] : null} onClick = {this.handlerForProfilePage}> {!this.props.guestMode ? this.props.currUser.username : "Guest"} </span>
+            <span id = {!this.props.guestMode ? styles["profile"] : null} onClick = {!this.props.guestMode ? this.handlerForProfilePage : null}> {!this.props.guestMode ? this.props.currUser.username : "Guest"} </span>
             <span id = {!this.props.guestMode ? styles["logout"] : styles["login"]} onClick = {!this.props.guestMode ? this.logOut : this.logIn}> {!this.props.guestMode ? "Log Out" : "Log In"} </span>
         </div>  
     )

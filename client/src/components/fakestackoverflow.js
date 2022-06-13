@@ -11,6 +11,8 @@ import Welcome from "./welcome";
 import LogIn from './logIn.js';
 import SignUp from './signUp.js';
 import UserProfile from './userProfile.js';
+import SideBarSection from './sideBar.js';
+import Styles from './fakestackoverflow.module.css';
 
 
 export default class FakeStackOverflow extends React.Component {
@@ -36,6 +38,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideSignUp: false,
       showhideGuestMode: false,
       showhideProfilePage: false,
+      showhideSideBar: false,
       currentUser: null,
       currentPage: 1,
       currentAnswerPage: 1,
@@ -48,32 +51,32 @@ export default class FakeStackOverflow extends React.Component {
       currLength: 0,
       currVotes: 0,
       // searchingModel: mainModel,
-      isQActive : true,
-      isTActive : false,
+      isQActive: true,
+      isTActive: false,
       insideAQ: false,
       comRendered: false,
     };
-        this.handlerHidingForQForms = this.handlerHidingForQForms.bind(this);
-        this.handlerChangingSpecificQ = this.handlerChangingSpecificQ.bind(this);
-        this.handlerChangingSpecificA = this.handlerChangingSpecificA.bind(this);
-        this.handlerChangingSpecificT = this.handlerChangingSpecificT.bind(this);
-        this.handlerForTagPage = this.handlerForTagPage.bind(this);
-        this.handlerForHomePage = this.handlerForHomePage.bind(this);
-        this.handlerForReturningUser = this.handlerForReturningUser.bind(this);
+    this.handlerHidingForQForms = this.handlerHidingForQForms.bind(this);
+    this.handlerChangingSpecificQ = this.handlerChangingSpecificQ.bind(this);
+    this.handlerChangingSpecificA = this.handlerChangingSpecificA.bind(this);
+    this.handlerChangingSpecificT = this.handlerChangingSpecificT.bind(this);
+    this.handlerForTagPage = this.handlerForTagPage.bind(this);
+    this.handlerForHomePage = this.handlerForHomePage.bind(this);
+    this.handlerForReturningUser = this.handlerForReturningUser.bind(this);
 
-        this.handlerModelUpdate = this.handlerModelUpdate.bind(this);
+    this.handlerModelUpdate = this.handlerModelUpdate.bind(this);
 
-        // this.hideComp = this.hideComp.bind(this);
+    // this.hideComp = this.hideComp.bind(this);
 
   }
 
   handlerResetAnswers = async () => {
-    for(let i = 0; i < this.state.answers; i++) {
+    for (let i = 0; i < this.state.answers; i++) {
       this.state.answers[i].comPage = 1;
     }
     await axios.put("http://localhost:8000/updateAnswerCommentPageReset").then(() => {
       this.state.answers.map((val) => {
-        return  {_id: val._id, text: val.text, tags: val.tags, comments: val.comments, ans_by:val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: 1}
+        return { _id: val._id, text: val.text, tags: val.tags, comments: val.comments, ans_by: val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: 1 }
       })
     });
     this.setState({
@@ -84,27 +87,28 @@ export default class FakeStackOverflow extends React.Component {
 
   handlerForHomePage() {
     this.handlerResetAnswers();
-    this.setState ({
+    this.setState({
       showhideAnswers: false,
-      showhideAnswerForm:false, 
+      showhideAnswerForm: false,
       showhideQuestionForm: false,
-      showhideSearch:false,
+      showhideSearch: false,
       showhideQuestions: true,
       showhideTable: true,
       showhideTags: false,
       showhideTagSearch: false,
       showhideSearch: false,
+      showhideSideBar: true,
       QorAorT: "Questions",
       currTitle: "All Questions",
       currLength: this.state.questions.length,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
     })
   }
   /**
   Going into a specific question */
-  handlerChangingSpecificQ (e, specQ) {
+  handlerChangingSpecificQ(e, specQ) {
     this.handlerResetAnswers();
     this.setState({
       currQ: specQ,
@@ -112,12 +116,13 @@ export default class FakeStackOverflow extends React.Component {
       showhideTable: false,
       showhideSearch: false,
       showhideTagSearch: false,
+      showhideSideBar: true,
       QorAorT: "Answers",
       currTitle: specQ.title,
       currLength: specQ.answers.length,
       currVotes: specQ.votes,
       insideAQ: true,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
     })
     // console.log(this.state.currQ);
@@ -125,13 +130,14 @@ export default class FakeStackOverflow extends React.Component {
   /**
   Going into a specific answer
    */
-  handlerChangingSpecificA (e) {
+  handlerChangingSpecificA(e) {
     this.handlerResetAnswers()
     this.setState({
       showhideAnswers: false,
-      showhideAnswerForm:true, 
+      showhideAnswerForm: true,
       showhideQuestionForm: false,
-      showhideSearch:false,
+      showhideSearch: false,
+      showhideSideBar: false,
       showhideQuestions: false,
       showhideTable: false,
       showhideTags: false,
@@ -139,7 +145,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideSearch: false,
       currLength: 3,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
       // QorAorT: "Answers",
       // currTitle: specQ.title
@@ -152,20 +158,19 @@ export default class FakeStackOverflow extends React.Component {
 
     // console.log(this.state.model)
     let c = 0;
-    for(let i = 0 ; i < this.state.questions.length; i++) {
-        for(let j = 0; j < this.state.questions[i].tags.length; j++)
-        {
-          if(this.state.questions[i].tags[j].name === specT.name) {
-            c++;
-          }
+    for (let i = 0; i < this.state.questions.length; i++) {
+      for (let j = 0; j < this.state.questions[i].tags.length; j++) {
+        if (this.state.questions[i].tags[j].name === specT.name) {
+          c++;
         }
-      
+      }
+
     }
     this.setState({
       showhideAnswers: false,
-      showhideAnswerForm:false, 
+      showhideAnswerForm: false,
       showhideQuestionForm: false,
-      showhideSearch:false,
+      showhideSearch: false,
       showhideQuestions: true,
       showhideTable: false,
       showhideTags: false,
@@ -175,7 +180,7 @@ export default class FakeStackOverflow extends React.Component {
       currTitle: "Questions tagged" + "[" + specT.name + "]",
       currLength: c,
       QorAorT: "Questions",
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
     })
   }
@@ -184,22 +189,23 @@ export default class FakeStackOverflow extends React.Component {
   handlerHidingForQForms() {
     this.handlerResetAnswers();
 
-    this.setState({ 
+    this.setState({
       showhideAnswers: false,
-      showhideAnswerForm:false, 
+      showhideAnswerForm: false,
       showhideQuestionForm: true,
-      showhideSearch:false,
+      showhideSearch: false,
       showhideQuestions: false,
       showhideTable: false,
       showhideTags: false,
+      showhideSideBar: false,
       showhideTagSearch: false,
       showhideSearch: false,
       QorAorT: "Questions",
       currTitle: "All Questions",
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
-      })
+    })
   }
   /**
   Hiding certain components when we go into a question
@@ -207,18 +213,19 @@ export default class FakeStackOverflow extends React.Component {
   handlerHidingForSpecQ() {
     this.handlerResetAnswers();
 
-    this.setState({ 
+    this.setState({
       showhideQuestions: !this.state.showhideQuestions,
       showhideAnswers: !this.state.showhideAnswers,
       showhideTable: !this.state.showhideTable,
       showhideSearch: false,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideSideBar: true,
+      showhideProfilePage: false,
 
-      })
+    })
   }
 
-  
+
   /**
    Handler for when we add a new question and updating the model
    */
@@ -235,7 +242,8 @@ export default class FakeStackOverflow extends React.Component {
       showhideTable: true,
       showhideQuestionForm: !this.state.showhideQuestionForm,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideSideBar: true,
+      showhideProfilePage: false,
 
 
     })
@@ -251,15 +259,15 @@ export default class FakeStackOverflow extends React.Component {
     let arrTemp = this.state.currQ.answers;
     arrTemp.unshift(newAnswer);
     try {
-    axios.post("http://localhost:8000/addAnswer", newAnswer);    
-    axios.put("http://localhost:8000/updateQuestion", { upAns: newAnswer, id: this.state.currQ}).then(() => {
-      this.state.questions.map((val) => {
-        return val._id == this.state.currQ.id ? {_id: val._id, title: val.title, text: val.text, tags: val.tags, answers: arrTemp, asked_by:val.asked_by, ask_date_time: val.ask_date_time, views: val.views} : val
-      })
-    });
-    console.log("sadge");
+      axios.post("http://localhost:8000/addAnswer", newAnswer);
+      axios.put("http://localhost:8000/updateQuestion", { upAns: newAnswer, id: this.state.currQ }).then(() => {
+        this.state.questions.map((val) => {
+          return val._id == this.state.currQ.id ? { _id: val._id, title: val.title, text: val.text, tags: val.tags, answers: arrTemp, asked_by: val.asked_by, ask_date_time: val.ask_date_time, views: val.views } : val
+        })
+      });
+      console.log("sadge");
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
     this.updatesInstantly();
@@ -270,7 +278,7 @@ export default class FakeStackOverflow extends React.Component {
       currLength: this.state.currQ.answers.length,
       showhideAnswerForm: !this.state.showhideAnswerForm,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
 
     })
@@ -278,58 +286,58 @@ export default class FakeStackOverflow extends React.Component {
 
   /** Handler for when the search bar is used
    */
-  handlerForSearching = (res,curtit) => {
+  handlerForSearching = (res, curtit) => {
     this.handlerResetAnswers();
 
-    if(curtit === "No Questions Found") {
-      this.setState ({
+    if (curtit === "No Questions Found") {
+      this.setState({
         QorAorT: "Questions",
         currLength: 0,
-        currTitle: curtit,      
+        currTitle: curtit,
         howhideAnswers: false,
-        showhideAnswerForm:false, 
+        showhideAnswerForm: false,
         showhideQuestionForm: false,
-        showhideSearch:false,
+        showhideSearch: false,
         showhideQuestions: true,
         showhideTable: false,
         showhideTags: false,
         showhideTagSearch: false,
         showhideSearch: false,
         insideAQ: false,
-      showhideProfilePage:false,
+        showhideProfilePage: false,
 
       })
     }
     else {
-    this.setState({
-      searchingModel: res,
-      showhideAnswers: false,
-      showhideAnswerForm:false, 
-      showhideQuestionForm: false,
-      showhideSearch:false,
-      showhideQuestions: true,
-      showhideTable: false,
-      showhideTags: false,
-      showhideTagSearch: false,
-      showhideSearch: true,   
-      QorAorT: "Questions",
-      currLength: res.length,
-      currTitle: curtit,
-      insideAQ: false,
-      showhideProfilePage:false,
+      this.setState({
+        searchingModel: res,
+        showhideAnswers: false,
+        showhideAnswerForm: false,
+        showhideQuestionForm: false,
+        showhideSearch: false,
+        showhideQuestions: true,
+        showhideTable: false,
+        showhideTags: false,
+        showhideTagSearch: false,
+        showhideSearch: true,
+        QorAorT: "Questions",
+        currLength: res.length,
+        currTitle: curtit,
+        insideAQ: false,
+        showhideProfilePage: false,
 
-    })
+      })
+    }
   }
-}
 
   handlerForTagPage() {
     this.handlerResetAnswers();
 
     this.setState({
       showhideAnswers: false,
-      showhideAnswerForm:false, 
+      showhideAnswerForm: false,
       showhideQuestionForm: false,
-      showhideSearch:false,
+      showhideSearch: false,
       showhideQuestions: true,
       showhideTable: false,
       showhideTags: true,
@@ -339,7 +347,7 @@ export default class FakeStackOverflow extends React.Component {
       QorAorT: "Tags",
       currTitle: "All Tags",
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
     })
   }
@@ -349,7 +357,7 @@ export default class FakeStackOverflow extends React.Component {
 
     this.setState({
       showhideAnswers: false,
-      showhideAnswerForm: false, 
+      showhideAnswerForm: false,
       showhideQuestionForm: false,
       showhideSearch: false,
       showhideQuestions: false,
@@ -358,11 +366,12 @@ export default class FakeStackOverflow extends React.Component {
       showhideTagSearch: false,
       showhideSearch: false,
       showhideWelcome: false,
+      showhideSideBar: false,
       showhideLogIn: true,
       showhideSignUp: false,
       showhideGuestMode: true,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
 
     })
@@ -373,9 +382,9 @@ export default class FakeStackOverflow extends React.Component {
 
     this.setState({
       showhideAnswers: false,
-      showhideAnswerForm:false, 
+      showhideAnswerForm: false,
       showhideQuestionForm: false,
-      showhideSearch:false,
+      showhideSearch: false,
       showhideQuestions: false,
       showhideTable: false,
       showhideTags: false,
@@ -384,9 +393,10 @@ export default class FakeStackOverflow extends React.Component {
       showhideWelcome: false,
       showhideLogIn: false,
       showhideSignUp: true,
+      showhideSideBar: false,
       showhideGuestMode: true,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
 
     })
@@ -407,14 +417,14 @@ export default class FakeStackOverflow extends React.Component {
       showhideTable: true,
       insideAQ: false,
       showhideGuestMode: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
       guestMode: false,
-      showhideWelcome: false
-
+      showhideWelcome: false,
+      showhideSideBar: true,
     })
   }
 
-  handlerForRegister = async(newU) => {
+  handlerForRegister = async (newU) => {
     this.handlerResetAnswers();
     console.log(newU)
     axios.post('http://localhost:8000/addUser', newU);
@@ -426,7 +436,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideSignUp: !this.state.showhideSignUp,
       showhideLogIn: !this.state.showhideLogIn,
       showhideGuestMode: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
 
     })
   }
@@ -436,9 +446,9 @@ export default class FakeStackOverflow extends React.Component {
 
     this.setState({
       showhideAnswers: false,
-      showhideAnswerForm:false, 
+      showhideAnswerForm: false,
       showhideQuestionForm: false,
-      showhideSearch:false,
+      showhideSearch: false,
       showhideQuestions: false,
       showhideTable: false,
       showhideTags: false,
@@ -451,7 +461,9 @@ export default class FakeStackOverflow extends React.Component {
       showhideBanner: false,
       currUser: null,
       insideAQ: false,
-      showhideProfilePage:false,
+      showhideProfilePage: false,
+      showhideSideBar: false,
+
 
 
     })
@@ -472,13 +484,13 @@ export default class FakeStackOverflow extends React.Component {
     try {
       await axios.put("http://localhost:8000/updateAnswerCommentPageUp", currA).then(() => {
         this.state.questions.map((val) => {
-          return val._id == this.state.currQ.id ? {_id: val._id, text: val.text, tags: val.tags, comments: val.comments, ans_by:val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: currA.comPage} : val
+          return val._id == this.state.currQ.id ? { _id: val._id, text: val.text, tags: val.tags, comments: val.comments, ans_by: val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: currA.comPage } : val
         })
       });
-      }
-      catch(error) {
-        console.log(error);
-      }
+    }
+    catch (error) {
+      console.log(error);
+    }
     this.updatesInstantly();
 
 
@@ -488,13 +500,13 @@ export default class FakeStackOverflow extends React.Component {
     try {
       await axios.put("http://localhost:8000/updateAnswerCommentPageDown", currA).then(() => {
         this.state.questions.map((val) => {
-          return val._id == this.state.currQ.id ? {_id: val._id, text: val.text, tags: val.tags, comments: val.comments, ans_by:val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: currA.comPage} : val
+          return val._id == this.state.currQ.id ? { _id: val._id, text: val.text, tags: val.tags, comments: val.comments, ans_by: val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: currA.comPage } : val
         })
       });
-      }
-      catch(error) {
-        console.log(error);
-      }
+    }
+    catch (error) {
+      console.log(error);
+    }
     this.updatesInstantly();
 
   }
@@ -545,90 +557,90 @@ export default class FakeStackOverflow extends React.Component {
       currLength: this.state.questions.length,
       showhideTable: true,
       showhideWelcome: false,
-      showhideProfilePage:false,
-
+      showhideProfilePage: false,
+      showhideSideBar: true,
     })
   }
 
-  handlerForAnswerVoteUp = (currentU,currentA) => {
+  handlerForAnswerVoteUp = (currentU, currentA) => {
     let t = this.state.users;
     let currU = t.find((e) => e.username === currentA.ans_by);
     console.log(currentU);
     currU.reputation += 5;
     try {
-    axios.put("http://localhost:8000/updateAnswerVoteUp", {currU: currentU, currA: currentA}).then(() => {
-      this.state.questions.map((val) => {
-        if (val._id === this.state.currQ.id) {
-          this.state.currQ.answers.map((specificA) => {
-              return specificA._id === currentA._id ? {_id: specificA._id, text: specificA.text, ans_by: specificA.ans_by, ans_date_time: specificA.ans_date_time, votes: ++currentA.votes} : specificA 
-          })
-        }
-      })
-    });
-    if(currentU.votedOn.includes(currentA._id + "DOWN")) {
-      for(let i = 0; i < currentU.votedOn.length; i++) {
-        if(currentU.votedOn[i] === currentA._id + "DOWN") {
-          currentU.votedOn[i] = currentA._id + "UP"
+      axios.put("http://localhost:8000/updateAnswerVoteUp", { currU: currentU, currA: currentA }).then(() => {
+        this.state.questions.map((val) => {
+          if (val._id === this.state.currQ.id) {
+            this.state.currQ.answers.map((specificA) => {
+              return specificA._id === currentA._id ? { _id: specificA._id, text: specificA.text, ans_by: specificA.ans_by, ans_date_time: specificA.ans_date_time, votes: ++currentA.votes } : specificA
+            })
+          }
+        })
+      });
+      if (currentU.votedOn.includes(currentA._id + "DOWN")) {
+        for (let i = 0; i < currentU.votedOn.length; i++) {
+          if (currentU.votedOn[i] === currentA._id + "DOWN") {
+            currentU.votedOn[i] = currentA._id + "UP"
+          }
         }
       }
-    }  
-    else {
-      currentU.votedOn.unshift(currentA._id + "UP");
-    }  
-  this.updatesInstantly()
+      else {
+        currentU.votedOn.unshift(currentA._id + "UP");
+      }
+      this.updatesInstantly()
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
   }
 
-  handlerForQuestionVoteUp = (currentU,currentQ) => {
+  handlerForQuestionVoteUp = (currentU, currentQ) => {
     let t = this.state.users;
     let currU = t.find((e) => e.username === currentQ.asked_by);
     currU.reputation += 5;
     // console.log("WHAT")
     try {
-    axios.put("http://localhost:8000/updateQuestionVoteUp", {currU: currentU, currQ: currentQ}).then(() => {
-      this.state.questions.map((val) => {
-        return val._id === currentQ._id ? {_id: val._id, title: val.title, text: val.text, tags: val.tags, answers: val.answers, asked_by:val.asked_by, ask_date_time: val.ask_date_time, views: ++currentQ.votes} : val
-      })
-    });
-    if(currentU.votedOn.includes(currentQ._id + "DOWN")) {
-      for(let i = 0; i < currentU.votedOn.length; i++) {
-        if(currentU.votedOn[i] === currentQ._id + "DOWN") {
-          currentU.votedOn[i] = currentQ._id + "UP"
+      axios.put("http://localhost:8000/updateQuestionVoteUp", { currU: currentU, currQ: currentQ }).then(() => {
+        this.state.questions.map((val) => {
+          return val._id === currentQ._id ? { _id: val._id, title: val.title, text: val.text, tags: val.tags, answers: val.answers, asked_by: val.asked_by, ask_date_time: val.ask_date_time, views: ++currentQ.votes } : val
+        })
+      });
+      if (currentU.votedOn.includes(currentQ._id + "DOWN")) {
+        for (let i = 0; i < currentU.votedOn.length; i++) {
+          if (currentU.votedOn[i] === currentQ._id + "DOWN") {
+            currentU.votedOn[i] = currentQ._id + "UP"
+          }
         }
       }
-    }  
-    else {
-      currentU.votedOn.unshift(currentQ._id + "UP");
-    }  
-    console.log(currentU)
-    
-  this.updatesInstantly()
+      else {
+        currentU.votedOn.unshift(currentQ._id + "UP");
+      }
+      console.log(currentU)
+
+      this.updatesInstantly()
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
   }
 
-  handlerForAnswerVoteDown = (currentU,currentA) => {
+  handlerForAnswerVoteDown = (currentU, currentA) => {
     let t = this.state.users;
     let currU = t.find((e) => e.username === currentA.ans_by);
     currU.reputation -= 10;
     try {
-      axios.put("http://localhost:8000/updateAnswerVoteDown", {currU: currentU, currA: currentA}).then(() => {
+      axios.put("http://localhost:8000/updateAnswerVoteDown", { currU: currentU, currA: currentA }).then(() => {
         this.state.questions.map((val) => {
           if (val._id === this.state.currQ.id) {
             this.state.currQ.answers.map((specificA) => {
-                return specificA._id === currentA._id ? {_id: specificA._id, text: specificA.text, ans_by: specificA.ans_by, ans_date_time: specificA.ans_date_time, votes: --currentA.votes} : specificA 
+              return specificA._id === currentA._id ? { _id: specificA._id, text: specificA.text, ans_by: specificA.ans_by, ans_date_time: specificA.ans_date_time, votes: --currentA.votes } : specificA
             })
           }
         })
       });
-      if(currentU.votedOn.includes(currentA._id + "UP")) {
-        for(let i = 0; i < currentU.votedOn.length; i++) {
-          if(currentU.votedOn[i] === currentA._id + "UP") {
+      if (currentU.votedOn.includes(currentA._id + "UP")) {
+        for (let i = 0; i < currentU.votedOn.length; i++) {
+          if (currentU.votedOn[i] === currentA._id + "UP") {
             currentU.votedOn[i] = currentA._id + "DOWN"
           }
         }
@@ -637,25 +649,25 @@ export default class FakeStackOverflow extends React.Component {
         currentU.votedOn.unshift(currentA._id + "DOWN");
       }
       this.updatesInstantly()
-      }
-      catch(error) {
-        console.log(error);
-      }
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
-  handlerForQuestionVoteDown = (currentU,currentQ) => {
+  handlerForQuestionVoteDown = (currentU, currentQ) => {
     let t = this.state.users;
     let currU = t.find((e) => e.username === currentQ.asked_by);
     currU.reputation -= 10;
     try {
-      axios.put("http://localhost:8000/updateQuestionVoteDown", {currU: currentU, currQ: currentQ}).then(() => {
-      this.state.questions.map((val) => {
-        return val._id === currentQ._id ? {_id: val._id, title: val.title, text: val.text, tags: val.tags, answers: val.answers, asked_by:val.asked_by, ask_date_time: val.ask_date_time, views: --currentQ.votes} : val
-      })
-    });
-      if(currentU.votedOn.includes(currentQ._id + "UP")) {
-        for(let i = 0; i < currentU.votedOn.length; i++) {
-          if(currentU.votedOn[i] === currentQ._id + "UP") {
+      axios.put("http://localhost:8000/updateQuestionVoteDown", { currU: currentU, currQ: currentQ }).then(() => {
+        this.state.questions.map((val) => {
+          return val._id === currentQ._id ? { _id: val._id, title: val.title, text: val.text, tags: val.tags, answers: val.answers, asked_by: val.asked_by, ask_date_time: val.ask_date_time, views: --currentQ.votes } : val
+        })
+      });
+      if (currentU.votedOn.includes(currentQ._id + "UP")) {
+        for (let i = 0; i < currentU.votedOn.length; i++) {
+          if (currentU.votedOn[i] === currentQ._id + "UP") {
             currentU.votedOn[i] = currentQ._id + "DOWN"
           }
         }
@@ -664,10 +676,10 @@ export default class FakeStackOverflow extends React.Component {
         currentU.votedOn.unshift(currentQ._id + "DOWN");
       }
       this.updatesInstantly()
-      }
-      catch(error) {
-        console.log(error);
-      }
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
   handlerForQuestionComments = async (C) => {
@@ -677,39 +689,39 @@ export default class FakeStackOverflow extends React.Component {
     arrTemp.unshift(C);
     console.log(this.state.currQ);
     try {
-    axios.post("http://localhost:8000/addComment", C);    
-    await axios.put("http://localhost:8000/updateQuestionComment", { upCom: C, id: this.state.currQ}).then(() => {
-      this.state.questions.map((val) => {
-        return val._id === this.state.currQ._id ? {_id: val._id, title: val.title, text: val.text, tags: val.tags, answers: val.answers, comments: arrTemp, asked_by:val.asked_by, ask_date_time: val.ask_date_time, views: val.views} : val
-      })
-    });
-    console.log(C);
+      axios.post("http://localhost:8000/addComment", C);
+      await axios.put("http://localhost:8000/updateQuestionComment", { upCom: C, id: this.state.currQ }).then(() => {
+        this.state.questions.map((val) => {
+          return val._id === this.state.currQ._id ? { _id: val._id, title: val.title, text: val.text, tags: val.tags, answers: val.answers, comments: arrTemp, asked_by: val.asked_by, ask_date_time: val.ask_date_time, views: val.views } : val
+        })
+      });
+      console.log(C);
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
     this.updatesInstantly();
-  
+
   }
 
-  handlerForAnswerComments = async (C,currA) => {
+  handlerForAnswerComments = async (C, currA) => {
     // console.log(C);
     let arrTemp = currA.comments;
     arrTemp.unshift(C);
 
     try {
-    axios.post("http://localhost:8000/addComment", C);    
-    await axios.put("http://localhost:8000/updateAnswerComment", { upCom: C, id: currA}).then(() => {
-      this.state.answers.map((val) => {
-        return val._id === currA._id ? {_id: val._id, text: val.text, comments: arrTemp, ans_by:val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: val.comPage} : val
-      })
-    });
+      axios.post("http://localhost:8000/addComment", C);
+      await axios.put("http://localhost:8000/updateAnswerComment", { upCom: C, id: currA }).then(() => {
+        this.state.answers.map((val) => {
+          return val._id === currA._id ? { _id: val._id, text: val.text, comments: arrTemp, ans_by: val.ans_by, ans_date_time: val.ans_date_time, votes: val.votes, comPage: val.comPage } : val
+        })
+      });
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
     this.updatesInstantly();
-  
+
   }
 
   handlerForLoggingIn = () => {
@@ -719,8 +731,8 @@ export default class FakeStackOverflow extends React.Component {
       showhideWelcome: false,
       showhideSignUp: false,
       showhideLogIn: true,
-      showhideProfilePage:false,
-      showhideGuestMode:true
+      showhideProfilePage: false,
+      showhideGuestMode: true
     })
   }
 
@@ -731,7 +743,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideQuestions: false,
       showhideProfilePage: true,
       showhideTags: false,
-      showhideSearch:false,
+      showhideSearch: false,
       showhideTagSearch: false
     })
   }
@@ -744,169 +756,158 @@ export default class FakeStackOverflow extends React.Component {
     })
   }
 
-  
-
-  handleHideComp(name) {
-    switch (name) {
-      case "showhideBanner":
-        this.setState({ showhideBanner: !this.state.showhideBanner });
-        break;
-      case "showhideQuestionForm":
-        this.setState({ showhideQuestionForm: !this.state.showhideQuestionForm });
-        break;
-      case "showhideQuestions":
-        this.setState({ showhideQuestions: !this.state.showhideQuestions });
-        break;
-      case "showhideAnswerForm":
-        this.setState({ showhideAnswerForm: !this.state.showhideAnswerForm });
-        break;
-      case "showhideAnswers":
-        this.setState({ showhideAnswers: !this.state.showhideAnswers });
-        break;
-      case "showhideTags":
-        this.setState({ showhideTags: !this.state.showhideTags });
-        break;
-      case "showhideTable":
-        this.setState({ showhideTags: !this.state.showhideTable });
-        break;
-    }
-  }
   async componentDidMount() {
-    this.updatesInstantly()  
+    this.updatesInstantly()
   }
-  
+
   updatesInstantly = async () => {
     await axios.get('http://localhost:8000/questions')
-    .then(res => {
-      this.setState({questions: res.data});
-    })
+      .then(res => {
+        this.setState({ questions: res.data });
+      })
     await axios.get('http://localhost:8000/tags')
-    .then(res => {
-      this.setState({tags: res.data});
-    })
+      .then(res => {
+        this.setState({ tags: res.data });
+      })
     await axios.get('http://localhost:8000/answers')
-    .then(res => {
-      this.setState({answers: res.data});
-    })
+      .then(res => {
+        this.setState({ answers: res.data });
+      })
     await axios.get('http://localhost:8000/users')
-    .then(res => {
-      this.setState({users: res.data});
-    })
+      .then(res => {
+        this.setState({ users: res.data });
+      })
     await axios.get('http://localhost:8000/comments')
-    .then(res => {
-      this.setState({comments: res.data});
-    })
+      .then(res => {
+        this.setState({ comments: res.data });
+      })
   }
   render() {
-        const { showhideBanner, showhideQuestionForm, showhideQuestions, showhideAnswerForm, showhideAnswers, showhideTags, showhideTable, showhideSearch, showhideTagSearch, showhideWelcome, showhideLogIn, showhideSignUp, showhideProfilePage } = this.state;
+    const { showhideBanner, showhideQuestionForm, showhideQuestions, showhideAnswerForm, showhideAnswers, showhideTags, showhideTable, showhideSearch, showhideTagSearch, showhideWelcome, showhideLogIn, showhideSignUp, showhideProfilePage, showhideSideBar } = this.state;
     // <Questions buttonClick={this.hideComp.bind(this,"showhideQuestions")} />
     return (
       <div>
-        {showhideWelcome && <Welcome handlerForLogInPage = {this.handlerForLogInPage}
-                                     handlerForSignUpPage = {this.handlerForSignUpPage}
-                                     handlerForGuestMode = {this.handlerForGuestMode} />}
+        {showhideWelcome && <Welcome handlerForLogInPage={this.handlerForLogInPage}
+          handlerForSignUpPage={this.handlerForSignUpPage}
+          handlerForGuestMode={this.handlerForGuestMode} />}
 
-        {showhideLogIn && <LogIn dataU = {this.state.users} 
-                                 handlerForReturningUser = {this.handlerForReturningUser}
-                                 handlerForSignUpPage = {this.handlerForSignUpPage}
-                                 handlerForGuestMode = {this.handlerForGuestMode}
-                                handlerForWelcome = {this.handlerForWelcomePage}
-                                  /> }
+        {showhideLogIn && <LogIn dataU={this.state.users}
+          handlerForReturningUser={this.handlerForReturningUser}
+          handlerForSignUpPage={this.handlerForSignUpPage}
+          handlerForGuestMode={this.handlerForGuestMode}
+          handlerForWelcome={this.handlerForWelcomePage}
+        />}
 
-        {showhideSignUp && <SignUp  dataU = {this.state.users}
-                                    handlerForRegister = {this.handlerForRegister}
-                                    handlerForWelcome = {this.handlerForWelcomePage}
-                                    />}
-        {showhideBanner && <BannerSection 
-         dataQ = {this.state.questions}
-         dataT = {this.state.tags}
-         currUser = {this.state.currentUser}
-         guestMode = {this.state.showhideGuestMode}
-                handlerForSearching = {this.handlerForSearching }
-                handlerForTagPage = {this.handlerForTagPage}
-                handlerForHomePage = {this.handlerForHomePage}
-                handlerForLoggingOut = {this.handlerForLoggingOut}
-                handlerForLoggingIn = {this.handlerForLoggingIn}
-                handlerForProfilePage = {this.handlerForProfilePage}
-                 />}
+        {showhideSignUp && <SignUp dataU={this.state.users}
+          handlerForRegister={this.handlerForRegister}
+          handlerForWelcome={this.handlerForWelcomePage}
+        />}
 
-        {showhideProfilePage && <UserProfile  currUser = {this.state.currentUser}
-                                              tagData={this.state.tags} 
-                                              questionData={this.state.questions}
-                                              answerData={this.state.answers}
-                                              commentData={this.state.comments}
-                                              currPage = {this.state.currentPage}
-                                              handlerHidingForQForms = {this.handlerHidingForQForms} 
-                                              handlerChangingSpecificQ = {this.handlerChangingSpecificQ}
-                                              handlerForNextPage = {this.handlerForNextPage}
-                                              handlerForPrevPage = {this.handlerForPrevPage}
-                                              updatesInstantly = {this.updatesInstantly}/>}
-        
 
-        {showhideQuestions && <Questions handlerHidingForQForms = {this.handlerHidingForQForms}
-                                         numQuestions = {this.state.currLength}
-                                         sectionType = {this.state.QorAorT}
-                                         titleQuestions = {this.state.currTitle} 
-                                         guestMode = {this.state.showhideGuestMode}
-                                         currVotes = {this.state.currVotes}
-                                         insideAQ = {this.state.insideAQ} />}
-        {showhideQuestionForm && <QuestionForm handlerModelUpdate = {this.handlerModelUpdate} 
-                                               currUser = {this.state.currentUser}
-                                                modelTags= {this.state.tags}
-                                                numQuestions = {this.state.questions.length} />}
-        {showhideTable && <TableCreate tagData={this.state.tags} 
-                                        questionData={this.state.questions}
-                                        commentData={this.state.comments}
-                                        currPage = {this.state.currentPage}
-                                         handlerHidingForQForms = {this.handlerHidingForQForms} 
-                                         handlerChangingSpecificQ = {this.handlerChangingSpecificQ}
-                                         handlerForNextPage = {this.handlerForNextPage}
-                                         handlerForPrevPage = {this.handlerForPrevPage} />}
-        {showhideSearch && <TableCreate tagData = {this.state.tags}
-                                        questionData={this.state.searchingModel} 
-                                        commentData={this.state.comments}
-                                        currPage = {this.state.currentPage}
-                                          handlerHidingForQForms = {this.handlerHidingForQForms} 
-                                         handlerChangingSpecificQ = {this.handlerChangingSpecificQ} 
-                                         handlerForNextPage = {this.handlerForNextPage}
-                                         handlerForPrevPage = {this.handlerForPrevPage} />}
-        {showhideTagSearch && <TableCreate questionData = {this.state.tagModel} 
-                                           tagData = {this.state.tags}
-                                         commentData={this.state.comments}
-                                           currPage = {this.state.currentPage}
-                                          handlerHidingForQForms = {this.handlerHidingForQForms} 
-                                         handlerChangingSpecificQ = {this.handlerChangingSpecificQ}
-                                         handlerForNextPage = {this.handlerForNextPage}
-                                         handlerForPrevPage = {this.handlerForPrevPage} />}
-        {showhideAnswers && <InsideQ specificQ = {this.state.currQ} 
-                                      handlerChangingSpecificA = {this.handlerChangingSpecificA}
-                                      answerData = {this.state.answers}
-                                      tagData={this.state.tags}
-                                      commentData = {this.state.comments}
-                                      userData = {this.state.users}
-                                      currPage = {this.state.currentAnswerPage}
-                                      handlerForNextAnsPage = {this.handlerForNextAnsPage}
-                                      currUser = {this.state.currentUser}
-                                      comRendered = {this.state.comRendered}
-                                         handlerForPrevAnsPage = {this.handlerForPrevAnsPage}
-                                         guestMode = {this.state.showhideGuestMode}
-                                         handlerForAnswerVoteUp = {this.handlerForAnswerVoteUp}
-                                         handlerForAnswerVoteDown = {this.handlerForAnswerVoteDown}
-                                         handlerForQuestionVoteUp = {this.handlerForQuestionVoteUp}
-                                         handlerForQuestionVoteDown = {this.handlerForQuestionVoteDown}
-                                         handlerForQuestionComments = {this.handlerForQuestionComments}
-                                         handlerForPrevQComPage = {this.handlerForPrevQComPage}
-                                         handlerForNextQComPage = {this.handlerForNextQComPage}
-                                         handlerForAnswerComments = {this.handlerForAnswerComments}
-                                         handlerForNextAComPage = {this.handlerForNextAComPage}
-                                         handlerForPrevAComPage = {this.handlerForPrevAComPage}
-                                       />}
-        {showhideAnswerForm && <AnswerForm specificQ = {this.state.currQ}
-                                            handlerModelAUpdate = {this.handlerModelAUpdate}
-                                            currUser = {this.state.currentUser}  />}
-        {showhideTags && <Tag  tagDataQ = {this.state.questions} 
-                               tagDataT = {this.state.tags}
-                                handlerChangingSpecificT = {this.handlerChangingSpecificT} /> }
+
+        {showhideBanner && <BannerSection
+          dataQ={this.state.questions}
+          dataT={this.state.tags}
+          currUser={this.state.currentUser}
+          guestMode={this.state.showhideGuestMode}
+          handlerForSearching={this.handlerForSearching}
+          handlerForTagPage={this.handlerForTagPage}
+          handlerForHomePage={this.handlerForHomePage}
+          handlerForLoggingOut={this.handlerForLoggingOut}
+          handlerForLoggingIn={this.handlerForLoggingIn}
+          handlerForProfilePage={this.handlerForProfilePage}
+        />}
+        <div className={Styles.flexContainer}>
+          <div className={Styles.stick}>
+            {showhideSideBar && <SideBarSection
+              handlerForTagPage={this.handlerForTagPage}
+              handlerForHomePage={this.handlerForHomePage} />}
+
+          </div>
+
+          <div className={Styles.divider}>&nbsp;</div>
+
+          <div>
+
+            {showhideProfilePage && <UserProfile currUser={this.state.currentUser}
+              tagData={this.state.tags}
+              questionData={this.state.questions}
+              answerData={this.state.answers}
+              commentData={this.state.comments}
+              currPage={this.state.currentPage}
+              handlerHidingForQForms={this.handlerHidingForQForms}
+              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+              handlerForNextPage={this.handlerForNextPage}
+              handlerForPrevPage={this.handlerForPrevPage}
+              updatesInstantly={this.updatesInstantly} />}
+
+
+            {showhideQuestions && <Questions handlerHidingForQForms={this.handlerHidingForQForms}
+              numQuestions={this.state.currLength}
+              sectionType={this.state.QorAorT}
+              titleQuestions={this.state.currTitle}
+              guestMode={this.state.showhideGuestMode}
+              currVotes={this.state.currVotes}
+              insideAQ={this.state.insideAQ} />}
+            {showhideQuestionForm && <QuestionForm handlerModelUpdate={this.handlerModelUpdate}
+              currUser={this.state.currentUser}
+              modelTags={this.state.tags}
+              numQuestions={this.state.questions.length} />}
+            {showhideTable && <TableCreate tagData={this.state.tags}
+              questionData={this.state.questions}
+              commentData={this.state.comments}
+              currPage={this.state.currentPage}
+              handlerHidingForQForms={this.handlerHidingForQForms}
+              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+              handlerForNextPage={this.handlerForNextPage}
+              handlerForPrevPage={this.handlerForPrevPage} />}
+            {showhideSearch && <TableCreate tagData={this.state.tags}
+              questionData={this.state.searchingModel}
+              commentData={this.state.comments}
+              currPage={this.state.currentPage}
+              handlerHidingForQForms={this.handlerHidingForQForms}
+              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+              handlerForNextPage={this.handlerForNextPage}
+              handlerForPrevPage={this.handlerForPrevPage} />}
+            {showhideTagSearch && <TableCreate questionData={this.state.tagModel}
+              tagData={this.state.tags}
+              commentData={this.state.comments}
+              currPage={this.state.currentPage}
+              handlerHidingForQForms={this.handlerHidingForQForms}
+              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+              handlerForNextPage={this.handlerForNextPage}
+              handlerForPrevPage={this.handlerForPrevPage} />}
+            {showhideAnswers && <InsideQ specificQ={this.state.currQ}
+              handlerChangingSpecificA={this.handlerChangingSpecificA}
+              answerData={this.state.answers}
+              tagData={this.state.tags}
+              commentData={this.state.comments}
+              userData={this.state.users}
+              currPage={this.state.currentAnswerPage}
+              handlerForNextAnsPage={this.handlerForNextAnsPage}
+              currUser={this.state.currentUser}
+              comRendered={this.state.comRendered}
+              handlerForPrevAnsPage={this.handlerForPrevAnsPage}
+              guestMode={this.state.showhideGuestMode}
+              handlerForAnswerVoteUp={this.handlerForAnswerVoteUp}
+              handlerForAnswerVoteDown={this.handlerForAnswerVoteDown}
+              handlerForQuestionVoteUp={this.handlerForQuestionVoteUp}
+              handlerForQuestionVoteDown={this.handlerForQuestionVoteDown}
+              handlerForQuestionComments={this.handlerForQuestionComments}
+              handlerForPrevQComPage={this.handlerForPrevQComPage}
+              handlerForNextQComPage={this.handlerForNextQComPage}
+              handlerForAnswerComments={this.handlerForAnswerComments}
+              handlerForNextAComPage={this.handlerForNextAComPage}
+              handlerForPrevAComPage={this.handlerForPrevAComPage}
+            />}
+            {showhideAnswerForm && <AnswerForm specificQ={this.state.currQ}
+              handlerModelAUpdate={this.handlerModelAUpdate}
+              currUser={this.state.currentUser} />}
+            {showhideTags && <Tag tagDataQ={this.state.questions}
+              tagDataT={this.state.tags}
+              handlerChangingSpecificT={this.handlerChangingSpecificT} />}
+          </div>
+        </div>
       </div>
     )
   }
