@@ -85,8 +85,9 @@ class BannerSection extends React.Component {
         return (
             <div id={styles["bannerBg"]}>
                 <div id={styles["banner"]}>
-                <img id={styles["logoS"]} src={logo} alt="logo"/>
-                    <span id={styles["TitleStack"]}  >
+                
+                    <span id={styles["TitleStack"]} onClick={this.homepage}  >
+                    <img id={styles["logoS"]} src={logo} alt="logo"/>
                         stack 
                         <span id={styles["Title"]}>
                          fakeflow

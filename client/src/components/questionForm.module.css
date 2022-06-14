@@ -18,6 +18,7 @@
     background-color: lightgray;
     height:100%;
     justify-content: center;
+    overflow: auto;
 }
 
 
@@ -48,12 +49,15 @@
 }
 
 #QTitle, #QText, #QTag {
-    margin-bottom: 1em;
     width:100%;
 }
 
 #QText {
     resize: vertical;
+}
+
+#QT2, #QT3 {
+    margin-top: 1em;
 }
 
 #QPost {

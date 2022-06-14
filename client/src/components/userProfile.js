@@ -54,7 +54,7 @@ class UserProfile extends React.Component {
         t = t.filter(e => e.createdBy === this.props.currUser.username)
         // console.log(t)
     return (
-        <div>
+        <div id = {styles["wholePage"]}>
             <table id = {styles["FirstRow"]}>
                 <tbody>
                     <tr>

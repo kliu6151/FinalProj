@@ -744,7 +744,8 @@ export default class FakeStackOverflow extends React.Component {
       showhideProfilePage: true,
       showhideTags: false,
       showhideSearch: false,
-      showhideTagSearch: false
+      showhideTagSearch: false,
+      showhideQuestionForm: false
     })
   }
 
@@ -786,7 +787,7 @@ export default class FakeStackOverflow extends React.Component {
     const { showhideBanner, showhideQuestionForm, showhideQuestions, showhideAnswerForm, showhideAnswers, showhideTags, showhideTable, showhideSearch, showhideTagSearch, showhideWelcome, showhideLogIn, showhideSignUp, showhideProfilePage, showhideSideBar } = this.state;
     // <Questions buttonClick={this.hideComp.bind(this,"showhideQuestions")} />
     return (
-      <div id = {Styles["wholePage"]}>
+      <div id={showhideQuestionForm || showhideAnswerForm ? Styles["overflow"] : Styles["wholePage"]}>
         {showhideWelcome && <Welcome handlerForLogInPage={this.handlerForLogInPage}
           handlerForSignUpPage={this.handlerForSignUpPage}
           handlerForGuestMode={this.handlerForGuestMode} />}
@@ -824,7 +825,7 @@ export default class FakeStackOverflow extends React.Component {
               handlerForHomePage={this.handlerForHomePage} />}
 
           </div>
-          <div>
+          <div className={Styles.misc}>
 
             {showhideProfilePage && <UserProfile currUser={this.state.currentUser}
               tagData={this.state.tags}
@@ -846,7 +847,7 @@ export default class FakeStackOverflow extends React.Component {
               guestMode={this.state.showhideGuestMode}
               currVotes={this.state.currVotes}
               insideAQ={this.state.insideAQ} />}
-            
+
             {showhideTable && <TableCreate tagData={this.state.tags}
               questionData={this.state.questions}
               commentData={this.state.comments}
@@ -894,22 +895,22 @@ export default class FakeStackOverflow extends React.Component {
               handlerForNextAComPage={this.handlerForNextAComPage}
               handlerForPrevAComPage={this.handlerForPrevAComPage}
             />}
-            
+
             {showhideTags && <Tag tagDataQ={this.state.questions}
               tagDataT={this.state.tags}
               handlerChangingSpecificT={this.handlerChangingSpecificT} />}
           </div>
         </div>
-        <div id={showhideQuestionForm || showhideAnswerForm ? Styles["forms"] : null}>
-        {showhideQuestionForm && <QuestionForm handlerModelUpdate={this.handlerModelUpdate}
-              currUser={this.state.currentUser}
-              modelTags={this.state.tags}
-              numQuestions={this.state.questions.length} />}
-        {showhideAnswerForm && <AnswerForm specificQ={this.state.currQ}
-              handlerModelAUpdate={this.handlerModelAUpdate}
-              currUser={this.state.currentUser} />}    
+        <div id={showhideQuestionForm || showhideAnswerForm ? Styles["forms"] : Styles["hidden"]}>
+          {showhideQuestionForm && <QuestionForm handlerModelUpdate={this.handlerModelUpdate}
+            currUser={this.state.currentUser}
+            modelTags={this.state.tags}
+            numQuestions={this.state.questions.length} />}
+          {showhideAnswerForm && <AnswerForm specificQ={this.state.currQ}
+            handlerModelAUpdate={this.handlerModelAUpdate}
+            currUser={this.state.currentUser} />}
         </div>
-          
+
       </div>
     )
   }

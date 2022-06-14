@@ -12,9 +12,6 @@ class Questions extends React.Component {
 
     return (
             <div id = {styles["Questions"]}>
-                <div>
-                    Ask a public question
-                </div>
                 <table id = {styles["QHeader"]}>
                     <tbody>
                         <tr id = {styles["headings"]}>
