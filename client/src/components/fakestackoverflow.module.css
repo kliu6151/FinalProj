@@ -1,0 +1,54 @@
+
+
+.flexContainer {
+
+    display: flex;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* padding-top: 30px; */
+    /* padding-bottom: 30px; */
+    /* background-color: pink; */
+    /* margin-bottom:3px; */
+    justify-content: center;
+}
+
+.flexContainer > div:first-child{
+  
+  /* border-right: 1px solid rgb(0, 0, 0); */
+
+  padding-right:10%;
+}
+
+.flexContainer > div:last-child {
+    border-left: 1px solid rgb(0, 0, 0);
+    justify-content: center;
+}
+
+.stick {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;    
+}
+
+#forms {
+    height:100%;
+}
+
+#wholePage {
+    
+    height:100%;
+
+}
+
+#hidden {
+    display:none;
+}
+
+#overflow {
+    overflow: hidden;
+    height: 100%;
+}
+
+.misc {
+    width: 100%;
+}
