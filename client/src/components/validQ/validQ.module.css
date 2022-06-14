@@ -1,6 +1,7 @@
 .invalidQ {
-    color:red;
-    text-align: center;
-    width:60%;
-    /* display:none; */
+    text-align: left;
+    /* margin: 2px 0px; */
+    color: red;
+    /* padding: 2px; */
+    font-size: 12px;
 }

@@ -112,14 +112,6 @@ class QuestionForm extends React.Component {
 
             }
         }
-        // if (QTag.value.length === 0) {
-        //   this.handlerInvalidTag()
-        //   this.state.inValidTag = true
-        // }
-        // else {
-        //     this.state.inValidTag = false;
-        //     this.handlerValidTag()
-        // }
 
         if (this.state.inValidName === false && this.state.inValidText === false && this.state.inValidTitle === false && this.state.inValidTag === false) {
             this.submitQuestion(tidArr)
@@ -156,20 +148,23 @@ class QuestionForm extends React.Component {
                 <form id={styles["QuestionForm"]}>
 
                     <div id={styles["questionContainer"]}>
-                        {inValidTitle && <ValidTitle invalidSTitle={this.state.invalidSpecTitle} />}
-                        {inValidText && <ValidText />}
-                        {inValidTag && <ValidTag currU={this.state.currU} />}
+                        
+                        
+                        
                         <label id={styles["QT1"]}>Title</label> <br />
                         <div className={styles.desc}>Be specific and imagine you're asking a question to another person</div>
                         <input type="text" id={styles["QTitle"]} name="QTitle" /><br />
+                        <div className={styles.invalids}>{inValidTitle && <ValidTitle invalidSTitle={this.state.invalidSpecTitle} />}</div>
 
                         <label id={styles["QT2"]}>Question Text</label>
                         <div className={styles.desc}>Include all the information someone would need to answer your question</div>
                         <textarea type="text" id={styles["QText"]} rows="8" name="QText" /> <br />
+                        <div className={styles.invalids}>{inValidText && <ValidText />}</div>
 
                         <label id={styles["QT3"]}>Tags</label>
                         <div className={styles.desc}>Add keywords separated by whitespace.</div>
                         <input type="text" id={styles["QTag"]} name="QTag" /> <br />
+                        <div className={styles.invalids}>{inValidTag && <ValidTag currU={this.state.currU} />}</div>
                     </div>
 
                     <div id={styles["buttonContaienr"]}>
