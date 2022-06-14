@@ -1,39 +1,76 @@
+#bannerBg {
+    width: 100%;
+    background-color: hsl(210, 8%, 98%);
+    box-shadow: 0 1px 2px hsla(0,0%,0%,0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05), 0 2px 8px hsla(0, 0%, 0%, 0.05);
+    height:50px;
+
+}
+
 #banner {
     width: 100%;
+    margin: auto;
+    justify-content: center;
     text-align: center;
-    background-color: lightgray;
+    /* background-color: lightgray; */
     height:3rem;
     align-items: center;
-    display:block;
+    display:flex;
+    flex-direction: row;
 }
 
-#banner > span
-{
-    padding-left:1rem;
-    padding-right:1rem;
-    padding-top:.9rem;
-    padding-bottom:1rem;
-}
-
-#banner > * {
-    position: relative;
-    top:25%;
-}
 
 #Q, #T {
     font-weight: 550;
 }
 
-#Title{
-    font-weight: bolder;
-    font-size: larger;
+#logoS {
+  /* flex-grow:1; */
+  max-width: 80%;
+  max-height: 70%;
+
+}
+#TitleStack {
+    font-size:larger;
+    margin-right: 1.1rem;
+    height:100%;
+    display: flex;
+    align-items:center;
+    justify-content:center;
 }
 
-#Q:hover, #T:hover, #profile:hover, #logout:hover, #login:hover {
-    color: darkgray;
-    background-color: rgb(104, 102, 102);
+#Title{
+    font-weight: bolder;
+    /* font-size: larger; */
+}
+
+#Q:hover, #T:hover, #profile:hover, #logout:hover, #login:hover, #TitleStack:hover {
+    /* color: darkgray; */
+    background-color: rgb(224, 224, 224);
 }
 
 #NA {
     display: none;
+}
+
+#topBanner {
+    height: 0%;
+}
+
+
+#search {
+    width:50%;
+    padding-left:1.1rem;
+    padding-right:1.1rem;
+    margin-right:1.1rem;
+}
+
+#profile {
+    padding-left:1.1rem;
+    padding-right:1.1rem;
+}
+
+#logout, #login {
+    padding-left:1.1rem;
+    padding-right:1.1rem;
+
 }
