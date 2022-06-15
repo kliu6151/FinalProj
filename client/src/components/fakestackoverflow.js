@@ -183,7 +183,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideTagSearch: true,
       showhideSearch: false,
       tagModel: tagModel,
-      currTitle: "Questions tagged" + "[" + specT.name + "]",
+      currTitle: "Questions tagged" + " [" + specT.name + "]",
       currLength: c,
       QorAorT: "Questions",
       showhideProfilePage: false,
@@ -916,7 +916,8 @@ export default class FakeStackOverflow extends React.Component {
             <div id={Styles["tagShows"]}>
               {showhidePopularTags && <PopularTags
                 tagData={this.state.tags}
-                questionData={this.state.questions} />}
+                questionData={this.state.questions}
+                handlerChangingSpecificT={this.handlerChangingSpecificT} />}
             </div>
 
           </div>
