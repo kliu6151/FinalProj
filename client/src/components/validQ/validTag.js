@@ -9,8 +9,17 @@ class ValidTag extends React.Component {
     
     render() {
         return (
-            <div className = {styles.invalidQ}>Creating new tags require at least 100 reputation: Current Reputaton ({this.props.currU.reputation})</div>
-
+            <div>
+                {this.props.currU.reputation >= 100 ?
+                <div className = {styles.invalidQ}>
+                    Please input at least one tag!
+                </div>
+                :
+                <div className = {styles.invalidQ}>
+                    Creating new tags require at least 100 reputation: Current Reputaton ({this.props.currU.reputation})
+                </div>
+                }
+            </div>
         );
     }
 

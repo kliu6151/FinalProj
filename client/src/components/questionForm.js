@@ -87,6 +87,14 @@ class QuestionForm extends React.Component {
             this.state.inValidText = false
             this.handlerValidText()
         }
+        if(QTag.value.length === 0){
+            this.handlerInvalidTag()
+            this.state.inValidTag = true
+        }
+        else {
+            this.state.inValidTag = false;
+            this.handlerValidTag();
+        }
         let newKeyWords = document.getElementById(styles["QTag"]).value.split(" ");
         let tidArr = [];
         let modelTags = this.props.modelTags;
