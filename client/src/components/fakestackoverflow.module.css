@@ -19,11 +19,13 @@
     }
 }
 
-
-.flexContainer > div:last-child {
+.flexContainer > div:first-child {
+    border-right: 1px solid #d1e5f1;
+}
+/* .flexContainer > div:last-child {
     border-left: 1px solid rgb(0, 0, 0);
     justify-content: center;
-}
+} */
 
 .stick {
     margin: 0;

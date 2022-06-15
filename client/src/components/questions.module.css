@@ -42,7 +42,7 @@
     outline: none;
     background-color: hsl(206, 100%, 52%, 1);
     color:white;
-    float:left;
+    float:right;
 }
 
 #NOAMA {
@@ -51,6 +51,6 @@
 
 #Questions {
     padding-bottom:1%;
-    border-bottom: black solid 1px;
+    border-bottom: solid 1px #d1e5f1;;
     padding-top:2em;
 }

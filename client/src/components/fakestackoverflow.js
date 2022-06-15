@@ -915,7 +915,8 @@ export default class FakeStackOverflow extends React.Component {
 
             <div id={Styles["tagShows"]}>
               {showhidePopularTags && <PopularTags
-                tagData={this.state.tags} />}
+                tagData={this.state.tags}
+                questionData={this.state.questions} />}
             </div>
 
           </div>

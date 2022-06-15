@@ -9,11 +9,12 @@
 }
 
 .secondCol {
-    width:18%;
+    padding-left:1em;
 }
 
 .thirdCol {
-    width:25%;
+    float:right;
+    padding-top:5%;
 }
 
 .questionsTag {
@@ -47,7 +48,7 @@
 #questionsTitle {
     text-decoration: none;
     color: #07c;
-    
+    padding-bottom: 1em;
     cursor:pointer;
 }
 
