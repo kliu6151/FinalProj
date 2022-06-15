@@ -10,6 +10,7 @@
     /* background-color: pink; */
     /* margin-bottom:3px; */
     justify-content: center;
+    height:100%;
 }
 
 @media (min-width: 980px)
@@ -33,6 +34,7 @@
     border: 0;
     font: inherit;
     box-sizing: border-box;   
+    height:100%;
 }
 
 #forms {

@@ -754,7 +754,8 @@ export default class FakeStackOverflow extends React.Component {
       showhideTags: false,
       showhideSearch: false,
       showhideTagSearch: false,
-      showhideQuestionForm: false
+      showhideQuestionForm: false,
+      showhidePopularTags: false,
     })
   }
 
