@@ -13,6 +13,7 @@ import SignUp from './signUp.js';
 import UserProfile from './userProfile.js';
 import SideBarSection from './sideBar.js';
 import Styles from './fakestackoverflow.module.css';
+import PopularTags from './popularTags.js';
 
 
 export default class FakeStackOverflow extends React.Component {
@@ -39,6 +40,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideGuestMode: false,
       showhideProfilePage: false,
       showhideSideBar: false,
+      showhidePopularTags: false,
       currentUser: null,
       currentPage: 1,
       currentAnswerPage: 1,
@@ -98,6 +100,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideTagSearch: false,
       showhideSearch: false,
       showhideSideBar: true,
+      showhidePopularTags: true,
       QorAorT: "Questions",
       currTitle: "All Questions",
       currLength: this.state.questions.length,
@@ -117,6 +120,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideSearch: false,
       showhideTagSearch: false,
       showhideSideBar: true,
+      showhidePopularTags: false,
       QorAorT: "Answers",
       currTitle: specQ.title,
       currLength: specQ.answers.length,
@@ -141,6 +145,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideQuestions: false,
       showhideTable: false,
       showhideTags: false,
+      showhidePopularTags: false,
       showhideTagSearch: false,
       showhideSearch: false,
       currLength: 3,
@@ -174,6 +179,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideQuestions: true,
       showhideTable: false,
       showhideTags: false,
+      showhidePopularTags: false,
       showhideTagSearch: true,
       showhideSearch: false,
       tagModel: tagModel,
@@ -200,6 +206,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideSideBar: false,
       showhideTagSearch: false,
       showhideSearch: false,
+      showhidePopularTags: false,
       QorAorT: "Questions",
       currTitle: "All Questions",
       insideAQ: false,
@@ -244,7 +251,7 @@ export default class FakeStackOverflow extends React.Component {
       insideAQ: false,
       showhideSideBar: true,
       showhideProfilePage: false,
-
+      showhidePopularTags: true,
 
     })
   }
@@ -372,7 +379,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideGuestMode: true,
       insideAQ: false,
       showhideProfilePage: false,
-
+      showhidePopularTags: false,
 
     })
   }
@@ -397,7 +404,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideGuestMode: true,
       insideAQ: false,
       showhideProfilePage: false,
-
+      showhidePopularTags: false,
 
     })
   }
@@ -421,6 +428,7 @@ export default class FakeStackOverflow extends React.Component {
       guestMode: false,
       showhideWelcome: false,
       showhideSideBar: true,
+      showhidePopularTags: true,
     })
   }
 
@@ -463,7 +471,7 @@ export default class FakeStackOverflow extends React.Component {
       insideAQ: false,
       showhideProfilePage: false,
       showhideSideBar: false,
-
+      showhidePopularTags: false,
 
 
     })
@@ -559,6 +567,7 @@ export default class FakeStackOverflow extends React.Component {
       showhideWelcome: false,
       showhideProfilePage: false,
       showhideSideBar: true,
+      showhidePopularTags: true,
     })
   }
 
@@ -784,10 +793,10 @@ export default class FakeStackOverflow extends React.Component {
       })
   }
   render() {
-    const { showhideBanner, showhideQuestionForm, showhideQuestions, showhideAnswerForm, showhideAnswers, showhideTags, showhideTable, showhideSearch, showhideTagSearch, showhideWelcome, showhideLogIn, showhideSignUp, showhideProfilePage, showhideSideBar } = this.state;
+    const { showhidePopularTags, showhideBanner, showhideQuestionForm, showhideQuestions, showhideAnswerForm, showhideAnswers, showhideTags, showhideTable, showhideSearch, showhideTagSearch, showhideWelcome, showhideLogIn, showhideSignUp, showhideProfilePage, showhideSideBar } = this.state;
     // <Questions buttonClick={this.hideComp.bind(this,"showhideQuestions")} />
     return (
-      <div id={showhideQuestionForm || showhideAnswerForm ? Styles["overflow"] : Styles["wholePage"]}>
+      <div id={showhideQuestionForm || showhideAnswerForm ? Styles["overflow"] : Styles["wholeLayOut"]}>
         {showhideWelcome && <Welcome handlerForLogInPage={this.handlerForLogInPage}
           handlerForSignUpPage={this.handlerForSignUpPage}
           handlerForGuestMode={this.handlerForGuestMode} />}
@@ -803,9 +812,6 @@ export default class FakeStackOverflow extends React.Component {
           handlerForRegister={this.handlerForRegister}
           handlerForWelcome={this.handlerForWelcomePage}
         />}
-
-
-
         {showhideBanner && <BannerSection
           dataQ={this.state.questions}
           dataT={this.state.tags}
@@ -818,97 +824,111 @@ export default class FakeStackOverflow extends React.Component {
           handlerForLoggingIn={this.handlerForLoggingIn}
           handlerForProfilePage={this.handlerForProfilePage}
         />}
-        <div className={Styles.flexContainer}>
-          <div className={Styles.stick}>
-            {showhideSideBar && <SideBarSection
-              handlerForTagPage={this.handlerForTagPage}
-              handlerForHomePage={this.handlerForHomePage} />}
+        <div id={showhideQuestionForm || showhideAnswerForm ? Styles["overflow"] : Styles["wholePage"]}>
+
+
+
+
+
+          <div className={Styles.flexContainer}>
+            <div className={Styles.stick}>
+              {showhideSideBar && <SideBarSection
+                handlerForTagPage={this.handlerForTagPage}
+                handlerForHomePage={this.handlerForHomePage} />}
+
+            </div>
+            <div className={Styles.misc}>
+
+              {showhideProfilePage && <UserProfile currUser={this.state.currentUser}
+                tagData={this.state.tags}
+                questionData={this.state.questions}
+                answerData={this.state.answers}
+                commentData={this.state.comments}
+                currPage={this.state.currentPage}
+                handlerHidingForQForms={this.handlerHidingForQForms}
+                handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+                handlerForNextPage={this.handlerForNextPage}
+                handlerForPrevPage={this.handlerForPrevPage}
+                updatesInstantly={this.updatesInstantly} />}
+
+
+              {showhideQuestions && <Questions handlerHidingForQForms={this.handlerHidingForQForms}
+                numQuestions={this.state.currLength}
+                sectionType={this.state.QorAorT}
+                titleQuestions={this.state.currTitle}
+                guestMode={this.state.showhideGuestMode}
+                currVotes={this.state.currVotes}
+                insideAQ={this.state.insideAQ} />}
+
+              {showhideTable && <TableCreate tagData={this.state.tags}
+                questionData={this.state.questions}
+                commentData={this.state.comments}
+                currPage={this.state.currentPage}
+                handlerHidingForQForms={this.handlerHidingForQForms}
+                handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+                handlerForNextPage={this.handlerForNextPage}
+                handlerForPrevPage={this.handlerForPrevPage} />}
+              {showhideSearch && <TableCreate tagData={this.state.tags}
+                questionData={this.state.searchingModel}
+                commentData={this.state.comments}
+                currPage={this.state.currentPage}
+                handlerHidingForQForms={this.handlerHidingForQForms}
+                handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+                handlerForNextPage={this.handlerForNextPage}
+                handlerForPrevPage={this.handlerForPrevPage} />}
+              {showhideTagSearch && <TableCreate questionData={this.state.tagModel}
+                tagData={this.state.tags}
+                commentData={this.state.comments}
+                currPage={this.state.currentPage}
+                handlerHidingForQForms={this.handlerHidingForQForms}
+                handlerChangingSpecificQ={this.handlerChangingSpecificQ}
+                handlerForNextPage={this.handlerForNextPage}
+                handlerForPrevPage={this.handlerForPrevPage} />}
+              {showhideAnswers && <InsideQ specificQ={this.state.currQ}
+                handlerChangingSpecificA={this.handlerChangingSpecificA}
+                answerData={this.state.answers}
+                tagData={this.state.tags}
+                commentData={this.state.comments}
+                userData={this.state.users}
+                currPage={this.state.currentAnswerPage}
+                handlerForNextAnsPage={this.handlerForNextAnsPage}
+                currUser={this.state.currentUser}
+                comRendered={this.state.comRendered}
+                handlerForPrevAnsPage={this.handlerForPrevAnsPage}
+                guestMode={this.state.showhideGuestMode}
+                handlerForAnswerVoteUp={this.handlerForAnswerVoteUp}
+                handlerForAnswerVoteDown={this.handlerForAnswerVoteDown}
+                handlerForQuestionVoteUp={this.handlerForQuestionVoteUp}
+                handlerForQuestionVoteDown={this.handlerForQuestionVoteDown}
+                handlerForQuestionComments={this.handlerForQuestionComments}
+                handlerForPrevQComPage={this.handlerForPrevQComPage}
+                handlerForNextQComPage={this.handlerForNextQComPage}
+                handlerForAnswerComments={this.handlerForAnswerComments}
+                handlerForNextAComPage={this.handlerForNextAComPage}
+                handlerForPrevAComPage={this.handlerForPrevAComPage}
+              />}
+
+              {showhideTags && <Tag tagDataQ={this.state.questions}
+                tagDataT={this.state.tags}
+                handlerChangingSpecificT={this.handlerChangingSpecificT} />}
+            </div>
+
+            <div id={Styles["tagShows"]}>
+              {showhidePopularTags && <PopularTags
+                tagData={this.state.tags} />}
+            </div>
 
           </div>
-          <div className={Styles.misc}>
-
-            {showhideProfilePage && <UserProfile currUser={this.state.currentUser}
-              tagData={this.state.tags}
-              questionData={this.state.questions}
-              answerData={this.state.answers}
-              commentData={this.state.comments}
-              currPage={this.state.currentPage}
-              handlerHidingForQForms={this.handlerHidingForQForms}
-              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
-              handlerForNextPage={this.handlerForNextPage}
-              handlerForPrevPage={this.handlerForPrevPage}
-              updatesInstantly={this.updatesInstantly} />}
-
-
-            {showhideQuestions && <Questions handlerHidingForQForms={this.handlerHidingForQForms}
-              numQuestions={this.state.currLength}
-              sectionType={this.state.QorAorT}
-              titleQuestions={this.state.currTitle}
-              guestMode={this.state.showhideGuestMode}
-              currVotes={this.state.currVotes}
-              insideAQ={this.state.insideAQ} />}
-
-            {showhideTable && <TableCreate tagData={this.state.tags}
-              questionData={this.state.questions}
-              commentData={this.state.comments}
-              currPage={this.state.currentPage}
-              handlerHidingForQForms={this.handlerHidingForQForms}
-              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
-              handlerForNextPage={this.handlerForNextPage}
-              handlerForPrevPage={this.handlerForPrevPage} />}
-            {showhideSearch && <TableCreate tagData={this.state.tags}
-              questionData={this.state.searchingModel}
-              commentData={this.state.comments}
-              currPage={this.state.currentPage}
-              handlerHidingForQForms={this.handlerHidingForQForms}
-              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
-              handlerForNextPage={this.handlerForNextPage}
-              handlerForPrevPage={this.handlerForPrevPage} />}
-            {showhideTagSearch && <TableCreate questionData={this.state.tagModel}
-              tagData={this.state.tags}
-              commentData={this.state.comments}
-              currPage={this.state.currentPage}
-              handlerHidingForQForms={this.handlerHidingForQForms}
-              handlerChangingSpecificQ={this.handlerChangingSpecificQ}
-              handlerForNextPage={this.handlerForNextPage}
-              handlerForPrevPage={this.handlerForPrevPage} />}
-            {showhideAnswers && <InsideQ specificQ={this.state.currQ}
-              handlerChangingSpecificA={this.handlerChangingSpecificA}
-              answerData={this.state.answers}
-              tagData={this.state.tags}
-              commentData={this.state.comments}
-              userData={this.state.users}
-              currPage={this.state.currentAnswerPage}
-              handlerForNextAnsPage={this.handlerForNextAnsPage}
+          <div id={showhideQuestionForm || showhideAnswerForm ? Styles["forms"] : Styles["hidden"]}>
+            {showhideQuestionForm && <QuestionForm handlerModelUpdate={this.handlerModelUpdate}
               currUser={this.state.currentUser}
-              comRendered={this.state.comRendered}
-              handlerForPrevAnsPage={this.handlerForPrevAnsPage}
-              guestMode={this.state.showhideGuestMode}
-              handlerForAnswerVoteUp={this.handlerForAnswerVoteUp}
-              handlerForAnswerVoteDown={this.handlerForAnswerVoteDown}
-              handlerForQuestionVoteUp={this.handlerForQuestionVoteUp}
-              handlerForQuestionVoteDown={this.handlerForQuestionVoteDown}
-              handlerForQuestionComments={this.handlerForQuestionComments}
-              handlerForPrevQComPage={this.handlerForPrevQComPage}
-              handlerForNextQComPage={this.handlerForNextQComPage}
-              handlerForAnswerComments={this.handlerForAnswerComments}
-              handlerForNextAComPage={this.handlerForNextAComPage}
-              handlerForPrevAComPage={this.handlerForPrevAComPage}
-            />}
-
-            {showhideTags && <Tag tagDataQ={this.state.questions}
-              tagDataT={this.state.tags}
-              handlerChangingSpecificT={this.handlerChangingSpecificT} />}
+              modelTags={this.state.tags}
+              numQuestions={this.state.questions.length} />}
+            {showhideAnswerForm && <AnswerForm specificQ={this.state.currQ}
+              handlerModelAUpdate={this.handlerModelAUpdate}
+              currUser={this.state.currentUser} />}
           </div>
-        </div>
-        <div id={showhideQuestionForm || showhideAnswerForm ? Styles["forms"] : Styles["hidden"]}>
-          {showhideQuestionForm && <QuestionForm handlerModelUpdate={this.handlerModelUpdate}
-            currUser={this.state.currentUser}
-            modelTags={this.state.tags}
-            numQuestions={this.state.questions.length} />}
-          {showhideAnswerForm && <AnswerForm specificQ={this.state.currQ}
-            handlerModelAUpdate={this.handlerModelAUpdate}
-            currUser={this.state.currentUser} />}
+
         </div>
 
       </div>

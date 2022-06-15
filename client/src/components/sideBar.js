@@ -17,22 +17,27 @@ function SideBarSection(props) {
 
     const trigger = () => {
         props.handlerForTagPage();
-        // document.getElementById(styles["T"]).style.backgroundColor = 'darkgray';
-        // document.getElementById(styles["Q"]).style.backgroundColor = 'white';
+        document.getElementById(styles["T"]).style.backgroundColor = '#eff0f1';
+        document.getElementById(styles["Q"]).style.backgroundColor = 'white';
+        document.getElementById(styles["T"]).style.borderRight = '3px solid orange';
+        document.getElementById(styles["Q"]).style.borderRight = 'none';
+
 
         handleTColor()
     }
 
     const homepage = () => {
         props.handlerForHomePage();
-        // document.getElementById(styles["Q"]).style.backgroundColor = 'darkgray';
-        // document.getElementById(styles["T"]).style.backgroundColor = 'white';
+        document.getElementById(styles["Q"]).style.backgroundColor = '#eff0f1';
+        document.getElementById(styles["T"]).style.backgroundColor = 'white';
+        document.getElementById(styles["Q"]).style.borderRight = '3px solid orange';
+        document.getElementById(styles["T"]).style.borderRight = 'none';
 
         handleQColor()
     }
 
     return (
-        <div className="side-bar-section">
+        <div className={styles.sideBarSection}>
             <div id={styles["Q"]}
                 onClick={homepage}
                 className={isQActive ? {} : "styles.qTest"}

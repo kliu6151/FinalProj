@@ -1,6 +1,7 @@
 import styles from './banner.module.css'
 import React from "react";
 import logo from "../assets/logo.png";
+import SideBarSection from './sideBar';
 
 
 class BannerSection extends React.Component {

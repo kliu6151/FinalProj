@@ -2,7 +2,7 @@
 
 .flexContainer {
 
-    display: flex;
+    display: grid;
     /* justify-content: space-between; */
     /* align-items: center; */
     /* padding-top: 30px; */
@@ -12,12 +12,13 @@
     justify-content: center;
 }
 
-.flexContainer > div:first-child{
-  
-  /* border-right: 1px solid rgb(0, 0, 0); */
-
-  padding-right:10%;
+@media (min-width: 980px)
+{
+    .flexContainer {
+        grid-template-columns: 164px 1fr 324px;
+    }
 }
+
 
 .flexContainer > div:last-child {
     border-left: 1px solid rgb(0, 0, 0);
@@ -25,9 +26,11 @@
 }
 
 .stick {
-    position: sticky;
-    top: 0;
-    align-self: flex-start;    
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    box-sizing: border-box;   
 }
 
 #forms {
@@ -35,9 +38,9 @@
 }
 
 #wholePage {
-    
     height:100%;
-
+    max-width: 1264px;
+    margin: 0 auto;
 }
 
 #hidden {
@@ -51,4 +54,8 @@
 
 .misc {
     width: 100%;
+}
+
+#wholeLayOut {
+    height: 100%;
 }
